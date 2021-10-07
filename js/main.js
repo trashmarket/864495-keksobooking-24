@@ -1,3 +1,10 @@
+import {getRandomPositiveInteger} from './utils/get-random-positive-integer.js';
+import {getRandomPositiveFloat} from './utils/get-random-positive-float.js';
+import {arrFeatures, photosArr} from './data.js';
+
+getRandomPositiveFloat(1.2323, 2.1122);
+getRandomPositiveInteger(1,10);
+
 function getRandomIntInclusive(num1, num2) {
 
   if (num1 < 0 || num2 < 0) {
@@ -18,7 +25,6 @@ function getRandomIntInclusive(num1, num2) {
   }
 }
 
-
 function getRandomArbitrary(num1, num2, fixed) {
   if (num1 < 0 || num2 < 0) {
     return 'Меньше нуля';
@@ -35,18 +41,12 @@ function getRandomArbitrary(num1, num2, fixed) {
   }
 }
 
-
-getRandomArbitrary(3, 5.1, 5);
 let numImg = 0;
 
 const createImgNumber = function () {
   numImg++;
   return numImg < 10 ? '0' + numImg : numImg;
-
 };
-
-const arrFeatures = ['wifi','dishwasher','parking','washer','elevator','conditioner'];
-const photosArr = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg','https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg','https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 
 const randomArr = function (num, arr) {
   const arrNew = [];
@@ -84,4 +84,4 @@ const createoObject = function () {
 };
 const createArray = Array.from({length:10}, createoObject);
 
-console.log(createArray);
+createArray;
