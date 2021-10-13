@@ -1,6 +1,7 @@
 import {getRandomPositiveInteger} from './utils/get-random-positive-integer.js';
 import {getRandomPositiveFloat} from './utils/get-random-positive-float.js';
 import {arrFeatures, photosArr} from './data.js';
+import{generationCard} from './generationCard.js';
 
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1,10);
@@ -45,7 +46,7 @@ let numImg = 0;
 
 const createImgNumber = function () {
   numImg++;
-  return numImg < 10 ? '0' + numImg : numImg;
+  return numImg < 10 ? `0${numImg}` : numImg;
 };
 
 const randomArr = function (num, arr) {
@@ -70,11 +71,11 @@ const createoObject = function () {
       type: 'house',
       rooms: getRandomIntInclusive(1, 6),
       guests: getRandomIntInclusive(1, 10),
-      checkin: getRandomIntInclusive(12, 14) + '-00',
-      checkout: getRandomIntInclusive(12, 14) + '-00',
+      checkin: `${getRandomIntInclusive(12, 14)}-00`,
+      checkout: `${getRandomIntInclusive(12, 14)}-00`,
       features: randomArr(getRandomIntInclusive(0, 5), arrFeatures),
       description: 'Большие комнаты',
-      photos:  randomArr(getRandomIntInclusive(0, 3), photosArr),
+      photos:  randomArr(getRandomIntInclusive(0, 2), photosArr),
     },
     location: {
       lat: getRandomArbitrary(35.65000, 35.70000, 5),
@@ -85,3 +86,6 @@ const createoObject = function () {
 const createArray = Array.from({length:10}, createoObject);
 
 createArray;
+let card = generationCard(createArray);
+//console.log(card);
+
