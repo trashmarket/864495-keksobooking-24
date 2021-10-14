@@ -21,18 +21,11 @@ import {
   randomArr
 } from './utils/get-random-arr.js';
 import { mockAuthor } from './data/mock/mock-author.js';
+import { mockLocation } from './data/mock/mock-location.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1, 10);
 
-const LAT_MIN = 35.65;
-const LAT_MAX = 35.7;
 
-const LNG_MIN = 139.7;
-const LNG_MAX = 139.8;
-const mockLocation = ()=>({
-  lat: getRandomArbitrary(LAT_MIN, LAT_MAX, 5),
-  lng: getRandomArbitrary(LNG_MIN, LNG_MAX, 5),
-});
 
 const createoObject = function (_item, index) {
   return {
