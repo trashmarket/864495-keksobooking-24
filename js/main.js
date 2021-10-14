@@ -25,7 +25,9 @@ import { mockLocation } from './data/mock/mock-location.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1, 10);
 
-
+const formatLocationAsAddress = function(location){
+  return `lat: ${location.lat}, lng: ${location.lng}`;
+}
 
 const createoObject = function (_item, index) {
   const location = mockLocation();
@@ -33,7 +35,7 @@ const createoObject = function (_item, index) {
     author: mockAuthor(index),
     offer: {
       title: 'Элитный дом',
-      address: location.lat, //<-- Показывает undefined не знаю как решить эту проблему.
+      address: formatLocationAsAddress(location),
       price: getRandomIntInclusive(1000000, 20000000),
       type: 'house',
       rooms: getRandomIntInclusive(1, 6),
