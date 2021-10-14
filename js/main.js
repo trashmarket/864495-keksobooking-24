@@ -14,8 +14,8 @@ import {
 import {
   getRandomIntInclusive
 } from './utils/get-random-int-inclusive.js';
-import{
- getRandomArbitrary
+import {
+  getRandomArbitrary
 } from './utils/get-random-arbitrary.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1, 10);
@@ -23,10 +23,8 @@ getRandomPositiveInteger(1, 10);
 
 
 
-let numImg = 0;
-
-const createImgNumber = function () {
-  numImg++;
+const createImgNumber = function (index) {
+  const numImg = index % 11;
   return numImg < 10 ? `0${numImg}` : numImg;
 };
 
@@ -40,10 +38,10 @@ const randomArr = function (num, arr) {
 };
 
 
-const createoObject = function () {
+const createoObject = function (_item, index) {
   return {
     author: {
-      avatar: `img/avatars/user${  createImgNumber() }.png`,
+      avatar: `img/avatars/user${  createImgNumber(index) }.png`,
     },
     offer: {
       title: 'Элитный дом',
