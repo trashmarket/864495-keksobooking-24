@@ -18,11 +18,9 @@ import {
   getRandomArbitrary
 } from './utils/get-random-arbitrary.js';
 import {
-  getAvatarUrl
-} from './data/mock/mock-avatar-url.js';
-import {
   randomArr
 } from './utils/get-random-arr.js';
+import { mockAuthor } from './data/mock/mock-author.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1, 10);
 
@@ -34,9 +32,7 @@ getRandomPositiveInteger(1, 10);
 
 const createoObject = function (_item, index) {
   return {
-    author: {
-      avatar: getAvatarUrl(index),
-    },
+    author: mockAuthor(index),
     offer: {
       title: 'Элитный дом',
       address: location.lat, //<-- Показывает undefined не знаю как решить эту проблему.
