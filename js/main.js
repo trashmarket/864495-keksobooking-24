@@ -17,20 +17,15 @@ import {
 import {
   getRandomArbitrary
 } from './utils/get-random-arbitrary.js';
+import {
+  getAvatarUrl
+} from './data/mock/mock-avatar-url.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1, 10);
 
 
 
-const NUMBER_OF_USER_IMGS = 11;
-const formatWithLeadingZero = function(aNumber){
-  return aNumber.toString().padStart(2,'0');
-}
-const createImgNumber = function (index) {
-  const numImg = 1+(index % NUMBER_OF_USER_IMGS);
-  return formatWithLeadingZero(numImg);
-};
-const getAvatarUrl = (index) => `img/avatars/user${  createImgNumber(index) }.png`
+
 
 const randomArr = function (num, arr) {
   const arrNew = [];
