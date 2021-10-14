@@ -29,7 +29,10 @@ const LAT_MAX = 35.7;
 
 const LNG_MIN = 139.7;
 const LNG_MAX = 139.8;
-
+const mockLocation = ()=>({
+  lat: getRandomArbitrary(LAT_MIN, LAT_MAX, 5),
+  lng: getRandomArbitrary(LNG_MIN, LNG_MAX, 5),
+});
 
 const createoObject = function (_item, index) {
   return {
@@ -47,10 +50,7 @@ const createoObject = function (_item, index) {
       description: 'Большие комнаты',
       photos: randomArr(getRandomIntInclusive(0, 2), photosArr),
     },
-    location: {
-      lat: getRandomArbitrary(LAT_MIN, LAT_MAX, 5),
-      lng: getRandomArbitrary(LNG_MIN, LNG_MAX, 5),
-    },
+    location: mockLocation(),
   };
 };
 const createArray = Array.from({
