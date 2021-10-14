@@ -24,7 +24,8 @@ import { mockAuthor } from './data/mock/mock-author.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1, 10);
 
-
+const LAT_MIN = 35.65;
+const LAT_MAX = 35.7;
 
 
 
@@ -47,7 +48,7 @@ const createoObject = function (_item, index) {
       photos: randomArr(getRandomIntInclusive(0, 2), photosArr),
     },
     location: {
-      lat: getRandomArbitrary(35.65000, 35.70000, 5),
+      lat: getRandomArbitrary(LAT_MIN, LAT_MAX, 5),
       lng: getRandomArbitrary(139.70000, 139.80000, 5),
     },
   };
