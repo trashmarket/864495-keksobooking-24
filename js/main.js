@@ -14,27 +14,14 @@ import {
 import {
   getRandomIntInclusive
 } from './utils/get-random-int-inclusive.js';
-
+import{
+ getRandomArbitrary
+} from './utils/get-random-arbitrary.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1, 10);
 
 
 
-function getRandomArbitrary(num1, num2, fixed) {
-  if (num1 < 0 || num2 < 0) {
-    return 'Меньше нуля';
-  }
-
-  if (num1 === num2) {
-    return 'Два числа равны друг другу';
-  }
-
-  if (num1 < num2) {
-    return (Math.random() * (num2 - num1) + num1).toFixed(fixed);
-  } else {
-    return (Math.random() * (num1 - num2) + num2).toFixed(fixed);
-  }
-}
 
 let numImg = 0;
 
