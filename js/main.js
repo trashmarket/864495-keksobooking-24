@@ -28,6 +28,7 @@ getRandomPositiveInteger(1, 10);
 
 
 const createoObject = function (_item, index) {
+  const location = mockLocation();
   return {
     author: mockAuthor(index),
     offer: {
@@ -43,7 +44,7 @@ const createoObject = function (_item, index) {
       description: 'Большие комнаты',
       photos: randomArr(getRandomIntInclusive(0, 2), photosArr),
     },
-    location: mockLocation(),
+    location,
   };
 };
 const createArray = Array.from({
