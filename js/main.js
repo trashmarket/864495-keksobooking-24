@@ -23,10 +23,15 @@ const createoObject = function (_item, index) {
     location,
   };
 };
-const createArray = Array.from({
+const offers = Array.from({
   length: 10
 }, createoObject);
 
-createArray;
-let card = generationCard(createArray);
+offers;
+const cardsHtml = generationCard(offers);
 //console.log(card);
+const display = document.querySelector("#map-canvas");
+
+//cardsHtml.forEach((cardHtml)=>display.appendChild(cardHtml));
+
+display.appendChild(cardsHtml[0])

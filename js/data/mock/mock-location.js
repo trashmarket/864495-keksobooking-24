@@ -1,3 +1,5 @@
+import {getRandomArbitrary} from "../../utils/get-random-arbitrary.js"
+
 const LAT_MIN = 35.65;
 const LAT_MAX = 35.7;
 
