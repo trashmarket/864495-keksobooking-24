@@ -20,6 +20,9 @@ import {
 import {
   getAvatarUrl
 } from './data/mock/mock-avatar-url.js';
+import {
+  randomArr
+} from './utils/get-random-arr.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1, 10);
 
@@ -27,14 +30,6 @@ getRandomPositiveInteger(1, 10);
 
 
 
-const randomArr = function (num, arr) {
-  const arrNew = [];
-
-  for (let i = num; i < arr.length; i++) {
-    arrNew.push(arr[i]);
-  }
-  return arrNew;
-};
 
 
 const createoObject = function (_item, index) {
