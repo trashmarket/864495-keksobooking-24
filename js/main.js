@@ -1,30 +1,24 @@
-import {getRandomPositiveInteger} from './utils/get-random-positive-integer.js';
-import {getRandomPositiveFloat} from './utils/get-random-positive-float.js';
-import {arrFeatures, photosArr} from './data.js';
-import{generationCard} from './generationCard.js';
+import {
+  getRandomPositiveInteger
+} from './utils/get-random-positive-integer.js';
+import {
+  getRandomPositiveFloat
+} from './utils/get-random-positive-float.js';
+import {
+  arrFeatures,
+  photosArr
+} from './data.js';
+import {
+  generationCard
+} from './generationCard.js';
+import {
+  getRandomIntInclusive
+} from './utils/get-random-int-inclusive.js';
 
 getRandomPositiveFloat(1.2323, 2.1122);
-getRandomPositiveInteger(1,10);
+getRandomPositiveInteger(1, 10);
 
-function getRandomIntInclusive(num1, num2) {
 
-  if (num1 < 0 || num2 < 0) {
-    return 'Меньше нуля';
-  }
-
-  if (num1 === num2) {
-    return 'Два числа равны друг другу';
-  }
-
-  num1 = num1 < num2 ?  Math.ceil(num1) : Math.floor(num1);
-  num2 = num2 > num1 ? Math.floor(num2) : Math.ceil(num2);
-
-  if (num1 < num2) {
-    return Math.floor(Math.random() * (num2 - num1 + 1)) + num1;
-  } else {
-    return Math.floor(Math.random() * (num1 - num2 + 1)) + num2;
-  }
-}
 
 function getRandomArbitrary(num1, num2, fixed) {
   if (num1 < 0 || num2 < 0) {
@@ -66,7 +60,7 @@ const createoObject = function () {
     },
     offer: {
       title: 'Элитный дом',
-      address: location.lat,//<-- Показывает undefined не знаю как решить эту проблему.
+      address: location.lat, //<-- Показывает undefined не знаю как решить эту проблему.
       price: getRandomIntInclusive(1000000, 20000000),
       type: 'house',
       rooms: getRandomIntInclusive(1, 6),
@@ -75,7 +69,7 @@ const createoObject = function () {
       checkout: `${getRandomIntInclusive(12, 14)}-00`,
       features: randomArr(getRandomIntInclusive(0, 5), arrFeatures),
       description: 'Большие комнаты',
-      photos:  randomArr(getRandomIntInclusive(0, 2), photosArr),
+      photos: randomArr(getRandomIntInclusive(0, 2), photosArr),
     },
     location: {
       lat: getRandomArbitrary(35.65000, 35.70000, 5),
@@ -83,9 +77,10 @@ const createoObject = function () {
     },
   };
 };
-const createArray = Array.from({length:10}, createoObject);
+const createArray = Array.from({
+  length: 10
+}, createoObject);
 
 createArray;
 let card = generationCard(createArray);
 //console.log(card);
-
