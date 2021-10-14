@@ -27,6 +27,7 @@ const createImgNumber = function (index) {
   const numImg = index % 11;
   return numImg < 10 ? `0${numImg}` : numImg;
 };
+const getAvatarUrl = (index) => `img/avatars/user${  createImgNumber(index) }.png`
 
 const randomArr = function (num, arr) {
   const arrNew = [];
@@ -41,7 +42,7 @@ const randomArr = function (num, arr) {
 const createoObject = function (_item, index) {
   return {
     author: {
-      avatar: `img/avatars/user${  createImgNumber(index) }.png`,
+      avatar: getAvatarUrl(index),
     },
     offer: {
       title: 'Элитный дом',
