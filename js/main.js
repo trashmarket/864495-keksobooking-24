@@ -22,12 +22,11 @@ import {
 } from './utils/get-random-arr.js';
 import { mockAuthor } from './data/mock/mock-author.js';
 import { mockLocation } from './data/mock/mock-location.js';
+import { formatLocationAsAddress } from './data/mock/format-location.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1, 10);
 
-const formatLocationAsAddress = function(location){
-  return `lat: ${location.lat}, lng: ${location.lng}`;
-}
+
 
 const createoObject = function (_item, index) {
   const location = mockLocation();
