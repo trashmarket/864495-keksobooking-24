@@ -22,10 +22,13 @@ getRandomPositiveInteger(1, 10);
 
 
 
-
+const NUMBER_OF_USER_IMGS = 11;
+const formatWithLeadingZero = function(aNumber){
+  return aNumber.toString().padStart(2,'0');
+}
 const createImgNumber = function (index) {
-  const numImg = index % 11;
-  return numImg < 10 ? `0${numImg}` : numImg;
+  const numImg = 1+(index % NUMBER_OF_USER_IMGS);
+  return formatWithLeadingZero(numImg);
 };
 const getAvatarUrl = (index) => `img/avatars/user${  createImgNumber(index) }.png`
 
