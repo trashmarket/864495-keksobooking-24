@@ -1,19 +1,13 @@
-const noActiveDocument = function () {
-  const FORM_AD = document.querySelector('.ad-form');
-  const FORM_AD_CHILDREN = FORM_AD.children;
-  const MAP_FILTER = document.querySelector('.map__filters');
-  const MAP_CHILDREN = MAP_FILTER.children;
-  FORM_AD.classList.add('ad-form--disabled');
-  MAP_FILTER.classList.add('ad-form--disabled');
+const shutDownDocument = function (form, formChildren, mapForm, mapFormChildren) {
+  form.classList.add('ad-form--disabled');
+  mapForm.classList.add('ad-form--disabled');
+  formChildren.forEach((item) => {
+    item.disabled = true;
+  });
 
-  for (let i = 0; i < FORM_AD_CHILDREN.length; i++) {
-    FORM_AD_CHILDREN[i].disabled = true;
-  }
-
-  for (let i = 0; i < MAP_CHILDREN.length; i++) {
-    MAP_CHILDREN[i].disabled = true;
-  }
-
+  mapFormChildren.forEach((item) => {
+    item.disabled = true;
+  });
 };
 
-export { noActiveDocument };
+export { shutDownDocument };

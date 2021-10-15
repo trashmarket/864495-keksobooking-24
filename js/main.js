@@ -4,8 +4,8 @@ import { mockAuthor } from './data/mock/mock-author.js';
 import { mockLocation } from './data/mock/mock-location.js';
 import { mockOffer } from './data/mock/mock-offer.js';
 import{ generationCard } from './generationCard.js';
-import { noActiveDocument } from './no-active-document.js';
-import { activeDocument } from './active-document.js';
+import { shutDownDocument } from './no-active-document.js';
+import { turningOnDocument } from './active-document.js';
 
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1,10);
@@ -25,5 +25,10 @@ const card = generationCard(createArray);
 const display = document.querySelector('#map-canvas');
 display.appendChild(card[0]);
 
-noActiveDocument();
-activeDocument();
+const FORM_AD = document.querySelector('.ad-form');
+const FORM_AD_CHILDREN = FORM_AD.querySelectorAll('fieldset');
+const MAP_FILTER = document.querySelector('.map__filters');
+const MAP_CHILDREN = MAP_FILTER.querySelectorAll('*');
+
+shutDownDocument(FORM_AD, FORM_AD_CHILDREN, MAP_FILTER, MAP_CHILDREN);
+turningOnDocument(FORM_AD, FORM_AD_CHILDREN, MAP_FILTER, MAP_CHILDREN);

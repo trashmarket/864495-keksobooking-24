@@ -1,16 +1,11 @@
-export const activeDocument = function () {
-  const FORM_AD = document.querySelector('.ad-form');
-  const FORM_AD_CHILDREN = FORM_AD.children;
-  const MAP_FILTER = document.querySelector('.map__filters');
-  const MAP_CHILDREN = MAP_FILTER.children;
-  FORM_AD.classList.remove('ad-form--disabled');
-  MAP_FILTER.classList.remove('ad-form--disabled');
+export const turningOnDocument = function (form, formChildren, mapForm, mapFormChildren) {
+  form.classList.remove('ad-form--disabled');
+  mapForm.classList.remove('ad-form--disabled');
+  formChildren.forEach((item) => {
+    item.disabled = false;
+  });
 
-  for (let i = 0; i < FORM_AD_CHILDREN.length; i++) {
-    FORM_AD_CHILDREN[i].disabled = false;
-  }
-
-  for (let i = 0; i < MAP_CHILDREN.length; i++) {
-    MAP_CHILDREN[i].disabled = false;
-  }
+  mapFormChildren.forEach((item)=>{
+    item.disabled = false;
+  });
 };
