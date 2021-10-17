@@ -6,7 +6,7 @@ import { mockOffer } from './data/mock/mock-offer.js';
 import{ generationCard } from './generationCard.js';
 import { shutDownDocument } from './no-active-document.js';
 import { turningOnDocument } from './active-document.js';
-
+import './valid-fom.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1,10);
 
