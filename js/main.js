@@ -8,7 +8,8 @@ import { shutDownDocument } from './no-active-document.js';
 import { turningOnDocument } from './active-document.js';
 //import './valid-fom.js';
 import { checkTitleValidity } from './form-utils/check-title-validity.js';
-
+import { priceInputCustum } from './form-utils/price-input.js';
+import { validRoomNumber } from './form-utils/valid-room-number.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1,10);
 
@@ -40,8 +41,26 @@ turningOnDocument(FORM_AD, FORM_AD_CHILDREN, MAP_FILTER, MAP_CHILDREN);
 const titleInput = document.querySelector('#title');
 const MIN_LENGTH = 20;
 const MAX_LENGTH = 100;
+
 titleInput.addEventListener('input', () => {
   checkTitleValidity(titleInput, MIN_LENGTH, MAX_LENGTH);
 });
 
 //price input
+
+const priceInput = document.querySelector('#price');
+const MAX_PRICE = 1000000;
+
+priceInput.addEventListener('input', () => {
+  priceInputCustum(priceInput, MAX_PRICE);
+});
+
+//rooms selekt
+
+const roomNumber = document.querySelector('#room_number');
+const capacity = document.querySelector('#capacity');
+const capacityChildren = capacity.querySelectorAll('option');
+
+roomNumber.addEventListener('input', () => {
+  validRoomNumber(roomNumber, capacityChildren);
+});
