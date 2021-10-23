@@ -9,8 +9,8 @@ import { turningOnDocument } from './active-document.js';
 //import './valid-fom.js';
 import { checkTitleValidity } from './form-utils/check-title-validity.js';
 import { priceInputCustum } from './form-utils/price-input.js';
-import { validRoomNumber } from './form-utils/valid-room-number.js';
-import { typeCorectPrice } from './form-utils/type-corect-price.js';
+import { ensureAvailableCapacilty } from './form-utils/ensure-available-capacilty.js';
+import { setPrice } from './form-utils/set-Price.js';
 import { timeinTimeout } from './form-utils/timein-timout.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1,10);
@@ -26,9 +26,9 @@ const createoObject = function (_item, index) {
 const createArray = Array.from({length:10}, createoObject);
 
 createArray;
-const card = generationCard(createArray);
-const display = document.querySelector('#map-canvas');
-display.appendChild(card[0]);
+ const card = generationCard(createArray);
+// const display = document.querySelector('#map-canvas');
+// display.appendChild(card[0]);
 
 const FORM_AD = document.querySelector('.ad-form');
 const FORM_AD_CHILDREN = FORM_AD.querySelectorAll('fieldset');
@@ -36,7 +36,7 @@ const MAP_FILTER = document.querySelector('.map__filters');
 const MAP_CHILDREN = MAP_FILTER.querySelectorAll('*');
 
 shutDownDocument(FORM_AD, FORM_AD_CHILDREN, MAP_FILTER, MAP_CHILDREN);
-turningOnDocument(FORM_AD, FORM_AD_CHILDREN, MAP_FILTER, MAP_CHILDREN);
+
 
 // title form input
 
@@ -64,7 +64,7 @@ const capacity = document.querySelector('#capacity');
 const capacityChildren = capacity.querySelectorAll('option');
 
 roomNumber.addEventListener('input', () => {
-  validRoomNumber(roomNumber, capacityChildren);
+  ensureAvailableCapacilty(roomNumber, capacityChildren);
 });
 
 // type house
@@ -72,23 +72,7 @@ roomNumber.addEventListener('input', () => {
 const typeHouse = document.querySelector('#type');
 
 typeHouse.addEventListener('input', () => {
-  switch (typeHouse.value) {
-    case 'bungalow':
-      typeCorectPrice('0', priceInput);
-      break;
-    case 'flat':
-      typeCorectPrice('1000', priceInput);
-      break;
-    case 'hotel':
-      typeCorectPrice('3000', priceInput);
-      break;
-    case 'house':
-      typeCorectPrice('5000', priceInput);
-      break;
-    case 'palace':
-      typeCorectPrice('10000', priceInput);
-      break;
-  }
+  setPrice(typeHouse.value, priceInput);
 });
 
 // timein timeout
@@ -103,3 +87,42 @@ timein.addEventListener('input', () => {
 timeout.addEventListener('input', () => {
   timeinTimeout(timeout, timein);
 });
+
+// Map
+const inputAddress = document.querySelector('#address');
+const map = L.map('map-canvas').on('load', () => {
+  turningOnDocument(FORM_AD, FORM_AD_CHILDREN, MAP_FILTER, MAP_CHILDREN);
+  inputAddress.value = 'lat: 35.8039, lng: 139.6397';
+}).setView([35.69, 139.77], 10);
+
+L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  },
+).addTo(map);
+
+const mainPinIcon = L.icon({
+  iconUrl: 'img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+
+const marker = L.marker(
+  {
+    lat: 35.8039,
+    lng: 139.6397,
+  },
+  {
+    draggable: true,
+    icon: mainPinIcon,
+  },
+);
+
+marker.addTo(map);
+
+marker.on('move', (evt) => {
+  console.log(evt.target._latlng);
+  inputAddress.value = `lat: ${evt.target._latlng.lat.toFixed(5)}, lng: ${evt.target._latlng.lng.toFixed(5)}`;
+});
+
