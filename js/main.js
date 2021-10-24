@@ -3,7 +3,7 @@ import { getRandomPositiveFloat } from './utils/get-random-positive-float.js';
 import { mockAuthor } from './data/mock/mock-author.js';
 import { mockLocation } from './data/mock/mock-location.js';
 import { mockOffer } from './data/mock/mock-offer.js';
-import{ generationCard } from './generationCard.js';
+import{ generationOneCard } from './generation-card.js';
 import { shutDownDocument } from './no-active-document.js';
 import { turningOnDocument } from './active-document.js';
 //import './valid-fom.js';
@@ -24,11 +24,6 @@ const createoObject = function (_item, index) {
   };
 };
 const createArray = Array.from({length:10}, createoObject);
-
-createArray;
- const card = generationCard(createArray);
-// const display = document.querySelector('#map-canvas');
-// display.appendChild(card[0]);
 
 const FORM_AD = document.querySelector('.ad-form');
 const FORM_AD_CHILDREN = FORM_AD.querySelectorAll('fieldset');
@@ -119,10 +114,25 @@ const marker = L.marker(
   },
 );
 
+createArray.forEach((tag) => {
+  const iconTag = L.icon({
+    iconUrl: 'img/pin.svg',
+    iconSize: [52, 52],
+    iconAnchor: [26, 52],
+  });
+  const tagMarker = L.marker(
+    tag.location,
+    {
+      draggable: true,
+      icon: iconTag,
+    },
+  );
+  tagMarker.addTo(map).bindPopup(generationOneCard(tag));
+});
+
 marker.addTo(map);
 
 marker.on('move', (evt) => {
-  console.log(evt.target._latlng);
   inputAddress.value = `lat: ${evt.target._latlng.lat.toFixed(5)}, lng: ${evt.target._latlng.lng.toFixed(5)}`;
 });
 
