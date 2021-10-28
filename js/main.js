@@ -12,6 +12,8 @@ import { priceInputCustum } from './form-utils/price-input.js';
 import { ensureAvailableCapacilty } from './form-utils/ensure-available-capacilty.js';
 import { setPrice } from './form-utils/set-Price.js';
 import { timeinTimeout } from './form-utils/timein-timout.js';
+import { createLoader } from './load.js';
+import { showAlertError } from './show-alert.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1,10);
 
@@ -113,6 +115,9 @@ const marker = L.marker(
     icon: mainPinIcon,
   },
 );
+
+const data = createLoader(showAlertError);
+data.then((arr) => console.log(arr));
 
 createArray.forEach((tag) => {
   const iconTag = L.icon({
