@@ -1,29 +1,17 @@
 import { getRandomPositiveInteger } from './utils/get-random-positive-integer.js';
 import { getRandomPositiveFloat } from './utils/get-random-positive-float.js';
-import { mockAuthor } from './data/mock/mock-author.js';
-import { mockLocation } from './data/mock/mock-location.js';
-import { mockOffer } from './data/mock/mock-offer.js';
 import{ generationOneCard } from './generation-card.js';
 import { shutDownDocument } from './no-active-document.js';
 import { turningOnDocument } from './active-document.js';
-//import './valid-fom.js';
 import { checkTitleValidity } from './form-utils/check-title-validity.js';
 import { priceInputCustum } from './form-utils/price-input.js';
 import { ensureAvailableCapacilty } from './form-utils/ensure-available-capacilty.js';
 import { setPrice } from './form-utils/set-Price.js';
 import { timeinTimeout } from './form-utils/timein-timout.js';
+import { createLoader, sendData } from './load.js';
+import { showAlert } from './show-alert.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1,10);
-
-const createoObject = function (_item, index) {
-  const location = mockLocation();
-  return {
-    author: mockAuthor(index),
-    offer: mockOffer(location),
-    location,
-  };
-};
-const createArray = Array.from({length:10}, createoObject);
 
 const FORM_AD = document.querySelector('.ad-form');
 const FORM_AD_CHILDREN = FORM_AD.querySelectorAll('fieldset');
@@ -114,7 +102,9 @@ const marker = L.marker(
   },
 );
 
-createArray.forEach((tag) => {
+const data = createLoader(showAlert);
+
+data.then((array) => array.forEach((tag) => {
   const iconTag = L.icon({
     iconUrl: 'img/pin.svg',
     iconSize: [52, 52],
@@ -128,7 +118,7 @@ createArray.forEach((tag) => {
     },
   );
   tagMarker.addTo(map).bindPopup(generationOneCard(tag));
-});
+}));
 
 marker.addTo(map);
 
@@ -136,3 +126,41 @@ marker.on('move', (evt) => {
   inputAddress.value = `lat: ${evt.target._latlng.lat.toFixed(5)}, lng: ${evt.target._latlng.lng.toFixed(5)}`;
 });
 
+const adForm = document.querySelector('.ad-form');
+
+adForm.onsubmit = (evt) => {
+  evt.preventDefault();
+  sendData(showAlert, new FormData(evt.target));
+};
+
+const formReset = document.querySelector('.ad-form__reset');
+const features = document.querySelectorAll('.features input');
+const description = document.querySelector('#description');
+const imagesb = document.querySelector('#images');
+const formPhoto = document.querySelector('.ad-form__photo');
+
+formReset.onclick = (evt) => {
+  evt.preventDefault();
+  inputAddress.value = 'lat: 35.8039, lng: 139.6397';
+  marker.setLatLng(L.latLng(35.8039, 139.6397));
+  map.closePopup();
+  titleInput.value = '';
+  typeHouse.value = 'flat';
+  priceInput.value = '';
+  timein.value = '12:00';
+  timeout.value = '12:00';
+  roomNumber.value = '1';
+  capacity.value = '1';
+  features.forEach((elem) => elem.checked = false);
+  description.value = '';
+};
+
+imagesb.onchange = () => {
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    formPhoto.style.backgroundImage = `url(${e.target.result})`;
+    formPhoto.style.backgroundSize = 'cover';
+  };
+
+  reader.readAsDataURL(imagesb.files[0]);
+};
