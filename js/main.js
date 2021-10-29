@@ -1,31 +1,17 @@
 import { getRandomPositiveInteger } from './utils/get-random-positive-integer.js';
 import { getRandomPositiveFloat } from './utils/get-random-positive-float.js';
-import { mockAuthor } from './data/mock/mock-author.js';
-import { mockLocation } from './data/mock/mock-location.js';
-import { mockOffer } from './data/mock/mock-offer.js';
 import{ generationOneCard } from './generation-card.js';
 import { shutDownDocument } from './no-active-document.js';
 import { turningOnDocument } from './active-document.js';
-//import './valid-fom.js';
 import { checkTitleValidity } from './form-utils/check-title-validity.js';
 import { priceInputCustum } from './form-utils/price-input.js';
 import { ensureAvailableCapacilty } from './form-utils/ensure-available-capacilty.js';
 import { setPrice } from './form-utils/set-Price.js';
 import { timeinTimeout } from './form-utils/timein-timout.js';
-import { createLoader } from './load.js';
-import { showAlertError } from './show-alert.js';
+import { createLoader, sendData } from './load.js';
+import { showAlert } from './show-alert.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1,10);
-
-const createoObject = function (_item, index) {
-  const location = mockLocation();
-  return {
-    author: mockAuthor(index),
-    offer: mockOffer(location),
-    location,
-  };
-};
-const createArray = Array.from({length:10}, createoObject);
 
 const FORM_AD = document.querySelector('.ad-form');
 const FORM_AD_CHILDREN = FORM_AD.querySelectorAll('fieldset');
@@ -116,10 +102,9 @@ const marker = L.marker(
   },
 );
 
-const data = createLoader(showAlertError);
-data.then((arr) => console.log(arr));
+const data = createLoader(showAlert);
 
-createArray.forEach((tag) => {
+data.then((array) => array.forEach((tag) => {
   const iconTag = L.icon({
     iconUrl: 'img/pin.svg',
     iconSize: [52, 52],
@@ -133,7 +118,7 @@ createArray.forEach((tag) => {
     },
   );
   tagMarker.addTo(map).bindPopup(generationOneCard(tag));
-});
+}));
 
 marker.addTo(map);
 
@@ -141,3 +126,10 @@ marker.on('move', (evt) => {
   inputAddress.value = `lat: ${evt.target._latlng.lat.toFixed(5)}, lng: ${evt.target._latlng.lng.toFixed(5)}`;
 });
 
+const adForm = document.querySelector('.ad-form');
+
+adForm.onsubmit = (evt) => {
+  evt.preventDefault();
+  console.log(evt.target);
+  sendData(showAlert, new FormData(evt.target));
+};

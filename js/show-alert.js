@@ -1,6 +1,6 @@
 const ALERT_SHOW_TIME = 5000;
 
-const showAlertError = (message) => {
+const showAlert = (message, color) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
   alertContainer.style.position = 'absolute';
@@ -10,7 +10,7 @@ const showAlertError = (message) => {
   alertContainer.style.padding = '10px 3px';
   alertContainer.style.fontSize = '30px';
   alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'red';
+  alertContainer.style.backgroundColor = color;
   alertContainer.textContent = message;
   document.body.append(alertContainer);
 
@@ -19,4 +19,4 @@ const showAlertError = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {showAlertError};
+export {showAlert};

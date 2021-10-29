@@ -10,9 +10,9 @@ const generationOneCard = (house) => {
   newCard.querySelector('.popup__type').textContent = setTypeTextContent(house.offer.type);
   newCard.querySelector('.popup__text--capacity').textContent = `${house.offer.rooms} комнаты для ${house.offer.guests}`;
   newCard.querySelector('.popup__text--time').textContent = `Заезд после ${house.offer.checkin}, выезд до ${house.offer.checkout}`;
-  newCard.querySelector('.popup__features').innerHTML = house.offer.features.map((item)=> `<li class="popup__feature popup__feature--${item}">${item}</li>`).join(' ');
+  newCard.querySelector('.popup__features').innerHTML = (house.offer.features) ? house.offer.features.map((item)=> `<li class="popup__feature popup__feature--${item}">${item}</li>`).join(' ') : '';
   newCard.querySelector('.popup__description').textContent = house.offer.description;
-  newCard.querySelector('.popup__photos').innerHTML = house.offer.photos.map((item)=>`<img src="${item}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`).join(' ');
+  newCard.querySelector('.popup__photos').innerHTML = house.offer.photos ? house.offer.photos.map((item)=>`<img src="${item}" class="popup__photo" width="45" height="40" alt="Фотография жилья">`).join(' ') : '';
   newCard.querySelector('.popup__avatar').src = house.author.avatar;
   return newCard;
 };
