@@ -8,19 +8,15 @@ const createLoader = (modalError) => fetch('https://24.javascript.pages.academy/
 
 const sendData = (alertModal, body) => {
   fetch(
-    'https://24.javascript.pages.academy/keksobooking',// <= жалуется на запрос.
+    'https://24.javascript.pages.academy/keksobooking',
     {
       method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
       body,
     },
   ).then((response) => {
     if (response.ok) {
       alertModal('Form is send', 'green');
-    }
-    Error(`${response.status} ${response.statusText}`);
+    } else{throw Error(`${response.status} ${response.statusText}`);}
   }).catch((errorMessage) => alertModal(errorMessage, 'red'));
 };
 

@@ -130,6 +130,37 @@ const adForm = document.querySelector('.ad-form');
 
 adForm.onsubmit = (evt) => {
   evt.preventDefault();
-  console.log(evt.target);
   sendData(showAlert, new FormData(evt.target));
+};
+
+const formReset = document.querySelector('.ad-form__reset');
+const features = document.querySelectorAll('.features input');
+const description = document.querySelector('#description');
+const imagesb = document.querySelector('#images');
+const formPhoto = document.querySelector('.ad-form__photo');
+
+formReset.onclick = (evt) => {
+  evt.preventDefault();
+  inputAddress.value = 'lat: 35.8039, lng: 139.6397';
+  marker.setLatLng(L.latLng(35.8039, 139.6397));
+  map.closePopup();
+  titleInput.value = '';
+  typeHouse.value = 'flat';
+  priceInput.value = '';
+  timein.value = '12:00';
+  timeout.value = '12:00';
+  roomNumber.value = '1';
+  capacity.value = '1';
+  features.forEach((elem) => elem.checked = false);
+  description.value = '';
+};
+
+imagesb.onchange = () => {
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    formPhoto.style.backgroundImage = `url(${e.target.result})`;
+    formPhoto.style.backgroundSize = 'cover';
+  };
+
+  reader.readAsDataURL(imagesb.files[0]);
 };
