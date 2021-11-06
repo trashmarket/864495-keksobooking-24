@@ -10,7 +10,7 @@ import { setPrice } from './form-utils/set-Price.js';
 import { timeinTimeout } from './form-utils/timein-timout.js';
 import { createLoader, sendData } from './load.js';
 import { showAlert } from './show-alert.js';
-import { renderTagMarkers } from './form-utils/render-tag-markers.js';
+import { renderTagMarkers, changingType, changingPrice } from './form-utils/render-tag-markers.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1,10);
 
@@ -104,10 +104,11 @@ const marker = L.marker(
 );
 
 const data = createLoader(showAlert);
-
 data.then((array) => {
   console.log(array);
   renderTagMarkers(array, map);
+  changingType(() => renderTagMarkers(array, map));
+  changingPrice(() => renderTagMarkers(array, map));
 });
 
 marker.addTo(map);
