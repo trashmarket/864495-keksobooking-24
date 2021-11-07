@@ -10,7 +10,8 @@ import { setPrice } from './form-utils/set-Price.js';
 import { timeinTimeout } from './form-utils/timein-timout.js';
 import { createLoader, sendData } from './load.js';
 import { showAlert } from './show-alert.js';
-import { renderTagMarkers, changingType, changingPrice } from './form-utils/render-tag-markers.js';
+import { renderTagMarkers, changingType, changingPrice, changingRooms, changingGuests, changingFeatures} from './form-utils/render-tag-markers.js';
+import { throttle } from './utils/throttle.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1,10);
 
@@ -104,11 +105,14 @@ const marker = L.marker(
 );
 
 const data = createLoader(showAlert);
+const DELAY_FRAMES = 500;
 data.then((array) => {
-  console.log(array);
   renderTagMarkers(array, map);
-  changingType(() => renderTagMarkers(array, map));
-  changingPrice(() => renderTagMarkers(array, map));
+  changingType(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
+  changingPrice(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
+  changingRooms(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
+  changingGuests(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
+  changingFeatures(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
 });
 
 marker.addTo(map);
