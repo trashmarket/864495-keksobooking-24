@@ -1,6 +1,6 @@
 import { getRandomPositiveInteger } from './utils/get-random-positive-integer.js';
 import { getRandomPositiveFloat } from './utils/get-random-positive-float.js';
-import{ generationOneCard } from './generation-card.js';
+//import{ generationOneCard } from './generation-card.js';
 import { shutDownDocument } from './no-active-document.js';
 import { turningOnDocument } from './active-document.js';
 import { checkTitleValidity } from './form-utils/check-title-validity.js';
@@ -10,6 +10,8 @@ import { setPrice } from './form-utils/set-Price.js';
 import { timeinTimeout } from './form-utils/timein-timout.js';
 import { createLoader, sendData } from './load.js';
 import { showAlert } from './show-alert.js';
+import { renderTagMarkers, changingType, changingPrice, changingRooms, changingGuests, changingFeatures} from './form-utils/render-tag-markers.js';
+import { throttle } from './utils/throttle.js';
 getRandomPositiveFloat(1.2323, 2.1122);
 getRandomPositiveInteger(1,10);
 
@@ -103,22 +105,15 @@ const marker = L.marker(
 );
 
 const data = createLoader(showAlert);
-
-data.then((array) => array.forEach((tag) => {
-  const iconTag = L.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [52, 52],
-    iconAnchor: [26, 52],
-  });
-  const tagMarker = L.marker(
-    tag.location,
-    {
-      draggable: true,
-      icon: iconTag,
-    },
-  );
-  tagMarker.addTo(map).bindPopup(generationOneCard(tag));
-}));
+const DELAY_FRAMES = 500;
+data.then((array) => {
+  renderTagMarkers(array, map);
+  changingType(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
+  changingPrice(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
+  changingRooms(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
+  changingGuests(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
+  changingFeatures(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
+});
 
 marker.addTo(map);
 
