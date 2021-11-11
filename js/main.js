@@ -1,6 +1,3 @@
-import { getRandomPositiveInteger } from './utils/get-random-positive-integer.js';
-import { getRandomPositiveFloat } from './utils/get-random-positive-float.js';
-//import{ generationOneCard } from './generation-card.js';
 import { shutDownDocument } from './no-active-document.js';
 import { turningOnDocument } from './active-document.js';
 import { checkTitleValidity } from './form-utils/check-title-validity.js';
@@ -12,8 +9,6 @@ import { createLoader, sendData } from './load.js';
 import { showAlert } from './show-alert.js';
 import { renderTagMarkers, changingType, changingPrice, changingRooms, changingGuests, changingFeatures} from './form-utils/render-tag-markers.js';
 import { throttle } from './utils/throttle.js';
-getRandomPositiveFloat(1.2323, 2.1122);
-getRandomPositiveInteger(1,10);
 
 const FORM_AD = document.querySelector('.ad-form');
 const FORM_AD_CHILDREN = FORM_AD.querySelectorAll('fieldset');
