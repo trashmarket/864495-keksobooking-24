@@ -1,6 +1,5 @@
 import { getRandomPositiveInteger } from './utils/get-random-positive-integer.js';
 import { getRandomPositiveFloat } from './utils/get-random-positive-float.js';
-//import{ generationOneCard } from './generation-card.js';
 import { shutDownDocument } from './no-active-document.js';
 import { turningOnDocument } from './active-document.js';
 import { checkTitleValidity } from './form-utils/check-title-validity.js';
