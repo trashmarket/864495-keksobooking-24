@@ -15,7 +15,7 @@ import {
   setSyncMinPrice
 } from './form-utils/set-Price.js';
 import {
-  syncCheckInCheckOutTime,
+  syncCheckInCheckOutTime
 } from './form-utils/timein-timout.js';
 import {
   formatAddress
@@ -39,6 +39,11 @@ import {
   throttle
 } from './utils/throttle.js';
 import {
+  DELAY_FRAMES,
+  ICON_ANCHOR_HEIGHT,
+  ICON_ANCHOR_WIDTH,
+  ICON_HEIGHT,
+  ICON_WIDTH,
   INITIAL_LAT,
   INITIAL_LNG,
   INITIAL_MARKER_LAT,
@@ -83,8 +88,8 @@ L.tileLayer(
 
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: [ICON_WIDTH, ICON_HEIGHT],
+  iconAnchor: [ICON_ANCHOR_WIDTH, ICON_ANCHOR_HEIGHT],
 });
 
 const marker = L.marker({
@@ -96,7 +101,7 @@ const marker = L.marker({
 });
 
 const data = createLoader(showAlert);
-const DELAY_FRAMES = 500;
+
 data.then((array) => {
   renderTagMarkers(array, map);
   changingType(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
@@ -127,8 +132,8 @@ const formPhoto = document.querySelector('.ad-form__photo');
 
 formReset.onclick = (evt) => {
   evt.preventDefault();
-  inputAddress.value = 'lat: 35.8039, lng: 139.6397';
-  marker.setLatLng(L.latLng(35.8039, 139.6397));
+  inputAddress.value = formatAddress(INITIAL_MARKER_LAT,INITIAL_MARKER_LNG);//'lat: 35.8039, lng: 139.6397';
+  marker.setLatLng(L.latLng(INITIAL_MARKER_LAT, INITIAL_MARKER_LNG));
   map.closePopup();
   titleInput.value = '';
   typeHouse.value = 'flat';
