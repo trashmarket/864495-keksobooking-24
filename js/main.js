@@ -39,13 +39,14 @@ import {
 const allForms = [...document.forms];
 shutDownDocument(allForms);
 
+const priceInput = document.querySelector('#price');
+const titleInput = document.querySelector('#title');
 
 // title form input
-setTitleValidator(document.querySelector('#title'));
+setTitleValidator(titleInput);
 
 //price input
-
-setMaxPriceValidator(document.querySelector('#price'));
+setMaxPriceValidator(priceInput);
 
 //rooms selekt
 
