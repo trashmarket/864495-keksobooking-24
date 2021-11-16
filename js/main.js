@@ -41,6 +41,8 @@ shutDownDocument(allForms);
 
 const priceInput = document.querySelector('#price');
 const titleInput = document.querySelector('#title');
+const roomNumber = document.querySelector('#room_number');
+const capacity = document.querySelector('#capacity');
 
 // title form input
 setTitleValidator(titleInput);
@@ -49,9 +51,6 @@ setTitleValidator(titleInput);
 setMaxPriceValidator(priceInput);
 
 //rooms selekt
-
-const roomNumber = document.querySelector('#room_number');
-const capacity = document.querySelector('#capacity');
 
 roomNumber.addEventListener('input', () => {
   ensureCapacityAvailable(roomNumber, capacity);
