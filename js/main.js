@@ -8,7 +8,7 @@ import { timeinTimeout } from './form-utils/timein-timout.js';
 import { createLoader, sendData } from './load.js';
 import { showAlert } from './show-alert.js';
 import { renderTagMarkers, changingType, changingPrice, changingRooms, changingGuests, changingFeatures} from './form-utils/render-tag-markers.js';
-import { throttle } from './utils/throttle.js';
+import { throttle, debounce} from './utils/throttle.js';
 
 const FORM_AD = document.querySelector('.ad-form');
 const FORM_AD_CHILDREN = FORM_AD.querySelectorAll('fieldset');
@@ -107,13 +107,13 @@ data.then((array) => {
   changingPrice(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
   changingRooms(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
   changingGuests(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
-  changingFeatures(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
+  changingFeatures(debounce(() => renderTagMarkers(array, map), DELAY_FRAMES));
 });
 
 marker.addTo(map);
 
 marker.on('move', (evt) => {
-  inputAddress.value = `lat: ${evt.target._latlng.lat.toFixed(5)}, lng: ${evt.target._latlng.lng.toFixed(5)}`;
+  inputAddress.value = `lat: ${evt.target._latlng.lat.toFixed(4)}, lng: ${evt.target._latlng.lng.toFixed(4)}`;
 });
 
 const adForm = document.querySelector('.ad-form');

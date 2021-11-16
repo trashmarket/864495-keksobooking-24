@@ -1,5 +1,5 @@
 import { generationOneCard } from '../generation-card.js';
-const COUNT_CARDS = 10;
+const COUNT_CARDS = 30;
 let houseType = 'any';
 let housePrice = 'any';
 let houseRooms = 'any';
@@ -16,7 +16,7 @@ let markerGroup;
 const renderTagMarkers = (arrayData, map) => {
   markerGroup = L.layerGroup().addTo(map);
 
-  arrayData.slice(0, COUNT_CARDS).filter((tag) => {
+  arrayData.slice(20, COUNT_CARDS).filter((tag) => {
     if ((houseType === 'any' || tag.offer.type === houseType)
     && (houseRooms === 'any' || tag.offer.rooms === +houseRooms)
     && (houseGuest === 'any' || tag.offer.guests === +houseGuest)
