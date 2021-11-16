@@ -60,6 +60,7 @@ const typeHouse = document.querySelector('#type');
 const timein = document.querySelector('#timein');
 const timeout = document.querySelector('#timeout');
 const inputAddress = document.querySelector('#address');
+const filterForm = document.querySelector('.map__filters');
 
 setTitleValidator(titleInput);
 
@@ -96,6 +97,8 @@ const marker = L.marker({
 
 const data = createLoader(showAlert);
 
+
+///тут глобально запомнить массив
 data.then((array) => {
   renderTagMarkers(array, map);
   changingType(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
