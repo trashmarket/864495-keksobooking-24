@@ -8,6 +8,7 @@ import { createLoader, sendData } from './load.js';
 import { showAlert } from './show-alert.js';
 import { renderTagMarkers, changingType, changingPrice, changingRooms, changingGuests, changingFeatures} from './form-utils/render-tag-markers.js';
 import { throttle } from './utils/throttle.js';
+import { MAX_LENGTH,MIN_LENGTH } from './settings.js';
 
 const allForms = [...document.forms];
 shutDownDocument(allForms);
@@ -16,8 +17,7 @@ shutDownDocument(allForms);
 // title form input
 
 const titleInput = document.querySelector('#title');
-const MIN_LENGTH = 20;
-const MAX_LENGTH = 100;
+
 
 titleInput.addEventListener('input', () => {
   checkTitleValidity(titleInput, MIN_LENGTH, MAX_LENGTH);
