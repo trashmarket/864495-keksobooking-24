@@ -16,15 +16,9 @@ const setFormState = (form, state) => {
 };
 
 const shutDownDocument = function (form, formChildren, mapForm, mapFormChildren) {
-  form.classList.add('ad-form--disabled');
-  [...form.elements].forEach((item) => {
-    item.disabled = true;
-  });
+  setFormState(form, settings.disabled);
 
-  mapForm.classList.add('ad-form--disabled');
-  [...mapForm.elements].forEach((item) => {
-    item.disabled = true;
-  });
+  setFormState(mapForm, settings.disabled);
 };
 
 export {
