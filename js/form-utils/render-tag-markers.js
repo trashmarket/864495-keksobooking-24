@@ -13,18 +13,13 @@ import {
   RoomCount
 } from './set-Price.js';
 
-let houseType = 'any';
-let housePrice = 'any';
-let houseRooms = 'any';
-let houseGuest = 'any';
-const houseFetaures = [];
 const housingTypeSelector = document.querySelector('#housing-type');
 const housingPrice = document.querySelector('#housing-price');
-const houseRoomsSelekt = document.querySelector('#housing-rooms');
-const houseGuestsSelekt = document.querySelector('#housing-guests');
-const housingFeaturesSelekt = document.querySelector('#housing-features');
+const houseRoomsSelector = document.querySelector('#housing-rooms');
+const houseGuestsSelector = document.querySelector('#housing-guests');
+const housingFeaturesSelector = document.querySelector('#housing-features');
 
-let markerGroup;
+let markerGroup = null;
 
 const applyPred = (offer, pred) => {
   if (typeof pred === 'function') {
@@ -43,18 +38,26 @@ const applyFeatures = (offerFeatures, filterFeatures) => {
   return filterFeatures.every((filter) => offerFeatures.some((offer) => offer === filter));
 };
 
+const getHouseTypeFilter = (filterType)=>{
+  const settings =HouseTypes[filterType];
+  if(typeof settings === 'object' && settings !== null){
+    return settings.filter;
+  }
+  return undefined;
+};
+
 const makeFiltering = (data, filter) => {
-  const typePred = HouseTypes[filter.type];
+  const typePred = getHouseTypeFilter(filter.type);
   const pricePred = PriceRange[filter.price];
   const roomsPred = RoomCount[filter.rooms];
   const guestsPred = GuestsCount[filter.guests];
 
-  return data.filter((offer) => (
-    applyPred(offer, typePred) &&
-    applyPred(offer, pricePred) &&
-    applyPred(offer, roomsPred) &&
-    applyPred(offer, guestsPred) &&
-    applyFeatures(offer.features, filter.features)
+  return data.filter((record) => (
+    applyPred(record.offer, typePred) &&
+    applyPred(record.offer, pricePred) &&
+    applyPred(record.offer, roomsPred) &&
+    applyPred(record.offer, guestsPred) &&
+    applyFeatures(record.offer.features, filter.features)
   ));
 };
 
@@ -62,14 +65,14 @@ const prepareFilter = ()=>(
   {
     type: housingTypeSelector.value,
     price: housingPrice.value,
-    rooms: houseRoomsSelekt.value,
-    guests: houseGuestsSelekt.value,
-    features: [...housingFeaturesSelekt.querySelectorAll('input[type=checkbox]')].filter((e)=>e.checked).map((e)=>e.value),
+    rooms: houseRoomsSelector.value,
+    guests: houseGuestsSelector.value,
+    features: [...housingFeaturesSelector.querySelectorAll('input[type=checkbox]')].filter((e)=>e.checked).map((e)=>e.value),
   }
 );
 
 const ensureMarkerGroup = (map)=>{
-  if(markerGroup !== null)
+  if(markerGroup === null)
   {
     markerGroup = L.layerGroup().addTo(map);
   } else {
@@ -94,61 +97,7 @@ const renderTagMarkers = (arrayData, map) => {
   });
 };
 
-const changinFunction = (selektor) => {
-  markerGroup.clearLayers();
-  const type = selektor.value;
-  return type;
-};
-
-const changingType = (cb) => {
-  housingTypeSelector.addEventListener('input', () => {
-    houseType = changinFunction(housingTypeSelector);
-    cb();
-  });
-};
-
-const changingPrice = (cb) => {
-  housingPrice.addEventListener('input', () => {
-    housePrice = changinFunction(housingPrice);
-    cb();
-  });
-};
-
-const changingRooms = (cb) => {
-  houseRoomsSelekt.addEventListener('input', () => {
-    houseRooms = changinFunction(houseRoomsSelekt);
-    cb();
-  });
-};
-
-const changingGuests = (cb) => {
-  houseGuestsSelekt.addEventListener('input', () => {
-    houseGuest = changinFunction(houseGuestsSelekt);
-    cb();
-  });
-};
-
-const changingFeatures = (cb) => {
-  housingFeaturesSelekt.addEventListener('click', (event) => {
-    if (event.target.closest('.map__checkbox')) {
-      markerGroup.clearLayers();
-      const featuresValue = event.target.value;
-      const featuresIndex = houseFetaures.indexOf(featuresValue);
-      if (featuresIndex !== -1) {
-        houseFetaures.splice(featuresIndex, 1);
-      } else {
-        houseFetaures.push(featuresValue);
-      }
-      cb();
-    }
-  });
-};
 
 export {
-  renderTagMarkers,
-  changingType,
-  changingPrice,
-  changingRooms,
-  changingGuests,
-  changingFeatures
+  renderTagMarkers
 };

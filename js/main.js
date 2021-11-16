@@ -28,15 +28,10 @@ import {
   showAlert
 } from './show-alert.js';
 import {
-  renderTagMarkers,
-  changingType,
-  changingPrice,
-  changingRooms,
-  changingGuests,
-  changingFeatures
+  renderTagMarkers
 } from './form-utils/render-tag-markers.js';
 import {
-  throttle
+  debounce
 } from './utils/throttle.js';
 import {
   DELAY_FRAMES,
@@ -97,15 +92,20 @@ const marker = L.marker({
 
 const data = createLoader(showAlert);
 
+let array = [];
 
-///тут глобально запомнить массив
-data.then((array) => {
+const renderTagMarkersThrottled = debounce(renderTagMarkers, DELAY_FRAMES);
+
+filterForm.addEventListener('input',()=>{
+  renderTagMarkersThrottled(array, map);
+});
+filterForm.querySelector('#housing-features').addEventListener('click',()=>{
+  renderTagMarkersThrottled(array,map);
+});
+
+data.then((received) => {
+  array = received;
   renderTagMarkers(array, map);
-  changingType(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
-  changingPrice(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
-  changingRooms(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
-  changingGuests(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
-  changingFeatures(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
 });
 
 marker.addTo(map);
