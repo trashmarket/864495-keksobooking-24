@@ -68,56 +68,20 @@ const prepareFilter = ()=>(
   }
 );
 
+const ensureMarkerGroup = (map)=>{
+  if(markerGroup !== null)
+  {
+    markerGroup = L.layerGroup().addTo(map);
+  } else {
+    markerGroup.clearLayers();
+  }
+};
+
 const renderTagMarkers = (arrayData, map) => {
-  markerGroup = L.layerGroup().addTo(map);
 
-  const filtered = makeFiltering(arrayData, prepareFilter()).filter((tag) => {
-    if ((houseType === 'any' || tag.offer.type === houseType) &&
-      (houseRooms === 'any' || tag.offer.rooms === +houseRooms) &&
-      (houseGuest === 'any' || tag.offer.guests === +houseGuest)
-    ) {
-      return true;
-    }
-  }).filter((tag) => {
-    if (housePrice === 'any') {
-      return true;
-    }
-    if (housePrice === 'middle') {
-      if (tag.offer.price >= 10000 && tag.offer.price <= 50000) {
-        return true;
-      }
-    }
-    if (housePrice === 'low') {
-      if (tag.offer.price <= 10000) {
-        return true;
-      }
-    }
-    if (housePrice === 'high') {
-      if (tag.offer.price >= 50000) {
-        return true;
-      }
-    }
-  }).filter((tag) => {
-    if (houseFetaures.join() === '') {
-      return true;
-    }
+  ensureMarkerGroup(map);
 
-    if (tag.offer.features) {
-      const array = tag.offer.features.map((item) => {
-        for (let i = 0; i < houseFetaures.length; i++) {
-          if (item === houseFetaures[i]) {
-            return item;
-          }
-        }
-      });
-
-      houseFetaures.sort();
-      array.sort();
-      if (houseFetaures.join('') === array.join('')) {
-        return true;
-      }
-    }
-  });
+  const filtered = makeFiltering(arrayData, prepareFilter());
   filtered.slice(0, COUNT_CARDS).forEach((tag) => {
     const iconTag = makePinIcon(PIN_CARD_URL);
     const tagMarker = L.marker(
