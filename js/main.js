@@ -9,15 +9,17 @@ import {
   setMaxPriceValidator
 } from './form-utils/price-input.js';
 import {
-  ensureCapacityAvailable, setSyncCountCapacity
+  setSyncCountCapacity
 } from './form-utils/ensure-available-capacilty.js';
 import {
-  setPrice, setSyncMinPrice
+  setSyncMinPrice
 } from './form-utils/set-Price.js';
 import {
   syncCheckInCheckOutTime,
-  syncDependentWithChanged
 } from './form-utils/timein-timout.js';
+import {
+  formatAddress
+} from './form-utils/format-address.js';
 import {
   createLoader,
   sendData
@@ -36,6 +38,13 @@ import {
 import {
   throttle
 } from './utils/throttle.js';
+import {
+  INITIAL_LAT,
+  INITIAL_LNG,
+  INITIAL_MARKER_LAT,
+  INITIAL_MARKER_LNG,
+  INITIAL_ZOOM
+} from './settings.js';
 
 const allForms = [...document.forms];
 shutDownDocument(allForms);
@@ -55,16 +64,16 @@ setMaxPriceValidator(priceInput);
 
 setSyncCountCapacity(roomNumber, capacity);
 
-setSyncMinPrice(typeHouse,priceInput);
+setSyncMinPrice(typeHouse, priceInput);
 
-syncCheckInCheckOutTime(timein,timeout);
+syncCheckInCheckOutTime(timein, timeout);
 
 // Map
 
 const map = L.map('map-canvas').on('load', () => {
   turningOnDocument(allForms);
-  inputAddress.value = 'lat: 35.8039, lng: 139.6397';
-}).setView([35.69, 139.77], 10);
+  inputAddress.value = formatAddress(INITIAL_MARKER_LAT, INITIAL_MARKER_LNG);
+}).setView([INITIAL_LAT, INITIAL_LNG], INITIAL_ZOOM);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -79,8 +88,8 @@ const mainPinIcon = L.icon({
 });
 
 const marker = L.marker({
-  lat: 35.8039,
-  lng: 139.6397,
+  lat: INITIAL_MARKER_LAT,
+  lng: INITIAL_MARKER_LNG,
 }, {
   draggable: true,
   icon: mainPinIcon,
@@ -100,7 +109,7 @@ data.then((array) => {
 marker.addTo(map);
 
 marker.on('move', (evt) => {
-  inputAddress.value = `lat: ${evt.target._latlng.lat.toFixed(5)}, lng: ${evt.target._latlng.lng.toFixed(5)}`;
+  inputAddress.value = formatAddress(evt.target._latlng.lat, evt.target._latlng.lng);
 });
 
 const adForm = document.querySelector('.ad-form');
