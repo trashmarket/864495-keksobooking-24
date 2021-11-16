@@ -1,13 +1,18 @@
-export const checkTitleValidity = function (titleInput, minLength, maxLength) {
-  const valueInput = titleInput.value.length;
+const getValidationOnLong = (currentLength, maxLength) => (
+  currentLength > maxLength ?
+    `нужно удалить ${currentLength - maxLength}` :
+    ''
+);
 
-  if (valueInput < minLength) {
-    titleInput.setCustomValidity(`еще пожалуйста ${minLength - valueInput}`);
-  } else if (valueInput > maxLength) {
-    titleInput.setCustomValidity(`нужно удалить ${valueInput - maxLength}`);
-  } else {
-    titleInput.setCustomValidity('');
-  }
+const getValidationMessage = (currentLength, minLength, maxLength) => (
+  currentLength < minLength ?
+    `еще пожалуйста ${minLength - currentLength}` :
+    getValidationOnLong(currentLength, maxLength)
+);
+
+
+export const checkTitleValidity = function (titleInput, minLength, maxLength) {
+  titleInput.setCustomValidity(getValidationMessage(titleInput.value.length, minLength, maxLength));
 
   titleInput.reportValidity();
 };
