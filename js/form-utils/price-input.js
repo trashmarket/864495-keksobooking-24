@@ -1,11 +1,7 @@
-export const priceInputCustum = (priceInput, maxPrice) => {
-  const valuePrice = priceInput.value;
+import { MAX_PRICE } from '../settings.js';
 
-  if (valuePrice > maxPrice) {
-    priceInput.setCustomValidity(`Превысили на ${valuePrice - maxPrice} рублей`);
-  } else {
-    priceInput.setCustomValidity('');
-  }
-
+const getValidationMessage = (price)=> (price > MAX_PRICE? `Превысили на ${price - MAX_PRICE} рублей`: '');
+export const priceInputCustum = (priceInput) => {
+  priceInput.setCustomValidity(getValidationMessage(priceInput.value));
   priceInput.reportValidity();
 };
