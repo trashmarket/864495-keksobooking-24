@@ -3,7 +3,7 @@ import {
   turningOnDocument
 } from './no-active-document.js';
 import {
-  checkTitleValidity
+  setTitleValidator
 } from './form-utils/check-title-validity.js';
 import {
   priceInputCustum
@@ -36,8 +36,6 @@ import {
   throttle
 } from './utils/throttle.js';
 import {
-  MAX_LENGTH,
-  MIN_LENGTH,
   MAX_PRICE
 } from './settings.js';
 
@@ -46,13 +44,7 @@ shutDownDocument(allForms);
 
 
 // title form input
-
-const titleInput = document.querySelector('#title');
-
-
-titleInput.addEventListener('input', () => {
-  checkTitleValidity(titleInput, MIN_LENGTH, MAX_LENGTH);
-});
+setTitleValidator(document.querySelector('#title'));
 
 //price input
 
