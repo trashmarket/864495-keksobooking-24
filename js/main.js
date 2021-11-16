@@ -47,6 +47,7 @@ const capacity = document.querySelector('#capacity');
 const typeHouse = document.querySelector('#type');
 const timein = document.querySelector('#timein');
 const timeout = document.querySelector('#timeout');
+const inputAddress = document.querySelector('#address');
 
 setTitleValidator(titleInput);
 
@@ -56,12 +57,10 @@ setSyncCountCapacity(roomNumber, capacity);
 
 setSyncMinPrice(typeHouse,priceInput);
 
-// timein timeout
-
 syncCheckInCheckOutTime(timein,timeout);
 
 // Map
-const inputAddress = document.querySelector('#address');
+
 const map = L.map('map-canvas').on('load', () => {
   turningOnDocument(allForms);
   inputAddress.value = 'lat: 35.8039, lng: 139.6397';
