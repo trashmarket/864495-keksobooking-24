@@ -1,124 +1,117 @@
-import { getRandomPositiveInteger } from './utils/get-random-positive-integer.js';
-import { getRandomPositiveFloat } from './utils/get-random-positive-float.js';
-//import{ generationOneCard } from './generation-card.js';
-import { shutDownDocument } from './no-active-document.js';
-import { turningOnDocument } from './active-document.js';
-import { checkTitleValidity } from './form-utils/check-title-validity.js';
-import { priceInputCustum } from './form-utils/price-input.js';
-import { ensureAvailableCapacilty } from './form-utils/ensure-available-capacilty.js';
-import { setPrice } from './form-utils/set-Price.js';
-import { timeinTimeout } from './form-utils/timein-timout.js';
-import { createLoader, sendData } from './load.js';
-import { showAlert } from './show-alert.js';
-import { renderTagMarkers, changingType, changingPrice, changingRooms, changingGuests, changingFeatures} from './form-utils/render-tag-markers.js';
-import { throttle } from './utils/throttle.js';
-getRandomPositiveFloat(1.2323, 2.1122);
-getRandomPositiveInteger(1,10);
+import {
+  shutDownDocument,
+  turningOnDocument
+} from './no-active-document.js';
+import {
+  setTitleValidator
+} from './form-utils/check-title-validity.js';
+import {
+  setMaxPriceValidator
+} from './form-utils/price-input.js';
+import {
+  setSyncCountCapacity
+} from './form-utils/ensure-available-capacilty.js';
+import {
+  setSyncMinPrice
+} from './form-utils/set-Price.js';
+import {
+  syncCheckInCheckOutTime
+} from './form-utils/timein-timout.js';
+import {
+  formatAddress
+} from './form-utils/format-address.js';
+import {
+  createLoader,
+  sendData
+} from './load.js';
+import {
+  showAlert
+} from './show-alert.js';
+import {
+  renderTagMarkers
+} from './form-utils/render-tag-markers.js';
+import {
+  debounce
+} from './utils/throttle.js';
+import {
+  DELAY_FRAMES,
+  INITIAL_LAT,
+  INITIAL_LNG,
+  INITIAL_MARKER_LAT,
+  INITIAL_MARKER_LNG,
+  INITIAL_ZOOM,
+  PIN_URL
+} from './settings.js';
+import { makePinIcon } from './generation-card.js';
 
-const FORM_AD = document.querySelector('.ad-form');
-const FORM_AD_CHILDREN = FORM_AD.querySelectorAll('fieldset');
-const MAP_FILTER = document.querySelector('.map__filters');
-const MAP_CHILDREN = MAP_FILTER.querySelectorAll('*');
-
-shutDownDocument(FORM_AD, FORM_AD_CHILDREN, MAP_FILTER, MAP_CHILDREN);
-
-
-// title form input
-
-const titleInput = document.querySelector('#title');
-const MIN_LENGTH = 20;
-const MAX_LENGTH = 100;
-
-titleInput.addEventListener('input', () => {
-  checkTitleValidity(titleInput, MIN_LENGTH, MAX_LENGTH);
-});
-
-//price input
+const allForms = [...document.forms];
+shutDownDocument(allForms);
 
 const priceInput = document.querySelector('#price');
-const MAX_PRICE = 1000000;
-
-priceInput.addEventListener('input', () => {
-  priceInputCustum(priceInput, MAX_PRICE);
-});
-
-//rooms selekt
-
+const titleInput = document.querySelector('#title');
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
-const capacityChildren = capacity.querySelectorAll('option');
-
-roomNumber.addEventListener('input', () => {
-  ensureAvailableCapacilty(roomNumber, capacityChildren);
-});
-
-// type house
-
 const typeHouse = document.querySelector('#type');
-
-typeHouse.addEventListener('input', () => {
-  setPrice(typeHouse.value, priceInput);
-});
-
-// timein timeout
-
 const timein = document.querySelector('#timein');
 const timeout = document.querySelector('#timeout');
+const inputAddress = document.querySelector('#address');
+const filterForm = document.querySelector('.map__filters');
 
-timein.addEventListener('input', () => {
-  timeinTimeout(timein, timeout);
-});
+setTitleValidator(titleInput);
 
-timeout.addEventListener('input', () => {
-  timeinTimeout(timeout, timein);
-});
+setMaxPriceValidator(priceInput);
+
+setSyncCountCapacity(roomNumber, capacity);
+
+setSyncMinPrice(typeHouse, priceInput);
+
+syncCheckInCheckOutTime(timein, timeout);
 
 // Map
-const inputAddress = document.querySelector('#address');
+
 const map = L.map('map-canvas').on('load', () => {
-  turningOnDocument(FORM_AD, FORM_AD_CHILDREN, MAP_FILTER, MAP_CHILDREN);
-  inputAddress.value = 'lat: 35.8039, lng: 139.6397';
-}).setView([35.69, 139.77], 10);
+  turningOnDocument(allForms);
+  inputAddress.value = formatAddress(INITIAL_MARKER_LAT, INITIAL_MARKER_LNG);
+}).setView([INITIAL_LAT, INITIAL_LNG], INITIAL_ZOOM);
 
 L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
 
-const mainPinIcon = L.icon({
-  iconUrl: 'img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+const mainPinIcon = makePinIcon(PIN_URL);
+
+const marker = L.marker({
+  lat: INITIAL_MARKER_LAT,
+  lng: INITIAL_MARKER_LNG,
+}, {
+  draggable: true,
+  icon: mainPinIcon,
 });
 
-const marker = L.marker(
-  {
-    lat: 35.8039,
-    lng: 139.6397,
-  },
-  {
-    draggable: true,
-    icon: mainPinIcon,
-  },
-);
-
 const data = createLoader(showAlert);
-const DELAY_FRAMES = 500;
-data.then((array) => {
+
+let array = [];
+
+const renderTagMarkersThrottled = debounce(renderTagMarkers, DELAY_FRAMES);
+
+filterForm.addEventListener('input',()=>{
+  renderTagMarkersThrottled(array, map);
+});
+filterForm.querySelector('#housing-features').addEventListener('click',()=>{
+  renderTagMarkersThrottled(array,map);
+});
+
+data.then((received) => {
+  array = received;
   renderTagMarkers(array, map);
-  changingType(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
-  changingPrice(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
-  changingRooms(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
-  changingGuests(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
-  changingFeatures(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
 });
 
 marker.addTo(map);
 
 marker.on('move', (evt) => {
-  inputAddress.value = `lat: ${evt.target._latlng.lat.toFixed(5)}, lng: ${evt.target._latlng.lng.toFixed(5)}`;
+  inputAddress.value = formatAddress(evt.target._latlng.lat, evt.target._latlng.lng);
 });
 
 const adForm = document.querySelector('.ad-form');
@@ -136,8 +129,8 @@ const formPhoto = document.querySelector('.ad-form__photo');
 
 formReset.onclick = (evt) => {
   evt.preventDefault();
-  inputAddress.value = 'lat: 35.8039, lng: 139.6397';
-  marker.setLatLng(L.latLng(35.8039, 139.6397));
+  inputAddress.value = formatAddress(INITIAL_MARKER_LAT,INITIAL_MARKER_LNG);
+  marker.setLatLng(L.latLng(INITIAL_MARKER_LAT, INITIAL_MARKER_LNG));
   map.closePopup();
   titleInput.value = '';
   typeHouse.value = 'flat';

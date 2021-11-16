@@ -22,4 +22,14 @@ function throttle (callback, delayBetweenFrames) {
   };
 }
 
+export const debounce = (callback, coolDownTime)=>{
+  let timerId = 0;
+  return (...rest)=>{
+    clearTimeout(timerId);
+    timerId = setTimeout(()=>{
+      callback.apply(this, rest);
+    },coolDownTime);
+  };
+};
+
 export {throttle};

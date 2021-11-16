@@ -1,13 +1,23 @@
-export const checkTitleValidity = function (titleInput, minLength, maxLength) {
-  const valueInput = titleInput.value.length;
+import { MAX_LENGTH, MIN_LENGTH } from '../settings.js';
 
-  if (valueInput < minLength) {
-    titleInput.setCustomValidity(`еще пожалуйста ${minLength - valueInput}`);
-  } else if (valueInput > maxLength) {
-    titleInput.setCustomValidity(`нужно удалить ${valueInput - maxLength}`);
-  } else {
-    titleInput.setCustomValidity('');
-  }
+const getValidationOnLong = (currentLength) => (
+  currentLength > MAX_LENGTH ?
+    `нужно удалить ${currentLength - MAX_LENGTH}` :
+    ''
+);
 
+const getValidationMessage = (currentLength) => (
+  currentLength < MIN_LENGTH ?
+    `еще пожалуйста ${MIN_LENGTH - currentLength}` :
+    getValidationOnLong(currentLength)
+);
+
+
+export const checkTitleValidity = function (titleInput) {
+  titleInput.setCustomValidity(getValidationMessage(titleInput.value.length));
   titleInput.reportValidity();
+};
+
+export const setTitleValidator = (control) => {
+  control.addEventListener('input',()=>checkTitleValidity(control));
 };
