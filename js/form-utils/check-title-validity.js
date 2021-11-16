@@ -14,5 +14,4 @@ const getValidationMessage = (currentLength, minLength, maxLength) => (
 export const checkTitleValidity = function (titleInput, minLength, maxLength) {
   titleInput.setCustomValidity(getValidationMessage(titleInput.value.length, minLength, maxLength));
 
-  titleInput.reportValidity();
 };
