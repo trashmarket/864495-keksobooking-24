@@ -48,7 +48,8 @@ import {
   INITIAL_LNG,
   INITIAL_MARKER_LAT,
   INITIAL_MARKER_LNG,
-  INITIAL_ZOOM
+  INITIAL_ZOOM,
+  PIN_URL
 } from './settings.js';
 
 const allForms = [...document.forms];
@@ -87,7 +88,7 @@ L.tileLayer(
 ).addTo(map);
 
 const mainPinIcon = L.icon({
-  iconUrl: 'img/main-pin.svg',
+  iconUrl: PIN_URL,
   iconSize: [ICON_WIDTH, ICON_HEIGHT],
   iconAnchor: [ICON_ANCHOR_WIDTH, ICON_ANCHOR_HEIGHT],
 });
@@ -132,7 +133,7 @@ const formPhoto = document.querySelector('.ad-form__photo');
 
 formReset.onclick = (evt) => {
   evt.preventDefault();
-  inputAddress.value = formatAddress(INITIAL_MARKER_LAT,INITIAL_MARKER_LNG);//'lat: 35.8039, lng: 139.6397';
+  inputAddress.value = formatAddress(INITIAL_MARKER_LAT,INITIAL_MARKER_LNG);
   marker.setLatLng(L.latLng(INITIAL_MARKER_LAT, INITIAL_MARKER_LNG));
   map.closePopup();
   titleInput.value = '';

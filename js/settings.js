@@ -11,3 +11,4 @@ export const ICON_HEIGHT = 52;
 export const ICON_ANCHOR_WIDTH = 26;
 export const ICON_ANCHOR_HEIGHT = 52;
 export const DELAY_FRAMES = 500;
+export const PIN_URL = 'img/main-pin.svg';
