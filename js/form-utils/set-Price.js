@@ -1,27 +1,31 @@
-const setting = {
-  bungalow: 0,
-  flat: 1000,
-  hotel: 3000,
-  palace:10000,
-  house: 5000,
-};
-
-const rusLang = {
-  bungalow: 'Бунгало',
-  flat: 'Квартира',
-  hotel: 'Отель',
-  palace: 'Дворец',
-  house: 'Дом',
+export const HouseTypes = {
+  bungalow:{
+    price: 0,
+    label: 'Бунгало',
+  },
+  flag: {
+    price: 1000,
+    label: 'Квартира',
+  },
+  hotel:{
+    price: 3000,
+    label: 'Отель',
+  },
+  palace:{
+    price:10000,
+    label: 'Дворец',
+  },
+  house: {
+    price: 5000,
+    label: 'Дом',
+  },
 };
 
 const setPrice = (type, priceInput) => {
-  priceInput.placeholder = setting[type];
+  priceInput.placeholder = HouseTypes[type].price;
 };
 
-const setTypeTextContent = (typeHouse) => {
-  const text = rusLang[typeHouse];
-  return text;
-};
+const setTypeTextContent = (typeHouse) =>  HouseTypes[typeHouse].label;
 
 export {setPrice, setTypeTextContent};
 
