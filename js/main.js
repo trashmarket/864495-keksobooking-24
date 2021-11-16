@@ -9,7 +9,7 @@ import {
   setMaxPriceValidator
 } from './form-utils/price-input.js';
 import {
-  ensureAvailableCapacilty
+  ensureAvailableCapacilty, ensureCapacityAvailable
 } from './form-utils/ensure-available-capacilty.js';
 import {
   setPrice
@@ -52,10 +52,9 @@ setMaxPriceValidator(priceInput);
 
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
-const capacityChildren = capacity.querySelectorAll('option');
 
 roomNumber.addEventListener('input', () => {
-  ensureAvailableCapacilty(roomNumber, capacityChildren);
+  ensureCapacityAvailable(roomNumber, capacity);
 });
 
 // type house

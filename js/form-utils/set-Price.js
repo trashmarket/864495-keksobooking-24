@@ -3,7 +3,7 @@ export const HouseTypes = {
     price: 0,
     label: 'Бунгало',
   },
-  flag: {
+  flat: {
     price: 1000,
     label: 'Квартира',
   },
