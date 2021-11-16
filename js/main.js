@@ -15,7 +15,8 @@ import {
   setPrice, setSyncMinPrice
 } from './form-utils/set-Price.js';
 import {
-  timeinTimeout
+  syncCheckInCheckOutTime,
+  syncDependentWithChanged
 } from './form-utils/timein-timout.js';
 import {
   createLoader,
@@ -44,6 +45,8 @@ const titleInput = document.querySelector('#title');
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
 const typeHouse = document.querySelector('#type');
+const timein = document.querySelector('#timein');
+const timeout = document.querySelector('#timeout');
 
 setTitleValidator(titleInput);
 
@@ -55,16 +58,7 @@ setSyncMinPrice(typeHouse,priceInput);
 
 // timein timeout
 
-const timein = document.querySelector('#timein');
-const timeout = document.querySelector('#timeout');
-
-timein.addEventListener('input', () => {
-  timeinTimeout(timein, timeout);
-});
-
-timeout.addEventListener('input', () => {
-  timeinTimeout(timeout, timein);
-});
+syncCheckInCheckOutTime(timein,timeout);
 
 // Map
 const inputAddress = document.querySelector('#address');
