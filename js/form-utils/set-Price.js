@@ -22,10 +22,18 @@ export const HouseTypes = {
 };
 
 const setPrice = (type, priceInput) => {
-  priceInput.placeholder = HouseTypes[type].price;
+  const value = HouseTypes[type].price;
+  priceInput.placeholder = value;
+  priceInput.min = value;
 };
 
 const setTypeTextContent = (typeHouse) =>  HouseTypes[typeHouse].label;
+
+export const setSyncMinPrice = (typeHouse, priceInput)=>{
+  typeHouse.addEventListener('input', () => {
+    setPrice(typeHouse.value, priceInput);
+  });
+};
 
 export {setPrice, setTypeTextContent};
 

@@ -12,7 +12,7 @@ import {
   ensureCapacityAvailable, setSyncCountCapacity
 } from './form-utils/ensure-available-capacilty.js';
 import {
-  setPrice
+  setPrice, setSyncMinPrice
 } from './form-utils/set-Price.js';
 import {
   timeinTimeout
@@ -43,23 +43,15 @@ const priceInput = document.querySelector('#price');
 const titleInput = document.querySelector('#title');
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
-
-// title form input
-setTitleValidator(titleInput);
-
-//price input
-setMaxPriceValidator(priceInput);
-
-//rooms selekt
-setSyncCountCapacity(roomNumber, capacity);
-
-// type house
-
 const typeHouse = document.querySelector('#type');
 
-typeHouse.addEventListener('input', () => {
-  setPrice(typeHouse.value, priceInput);
-});
+setTitleValidator(titleInput);
+
+setMaxPriceValidator(priceInput);
+
+setSyncCountCapacity(roomNumber, capacity);
+
+setSyncMinPrice(typeHouse,priceInput);
 
 // timein timeout
 
