@@ -15,7 +15,7 @@ const FORM_AD_CHILDREN = FORM_AD.querySelectorAll('fieldset');
 const MAP_FILTER = document.querySelector('.map__filters');
 const MAP_CHILDREN = MAP_FILTER.querySelectorAll('*');
 
-shutDownDocument(FORM_AD, FORM_AD_CHILDREN, MAP_FILTER, MAP_CHILDREN);
+shutDownDocument(FORM_AD, MAP_FILTER);
 
 
 // title form input

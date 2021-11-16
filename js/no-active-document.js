@@ -15,7 +15,7 @@ const setFormState = (form, state) => {
   });
 };
 
-const shutDownDocument = function (form, formChildren, mapForm, mapFormChildren) {
+const shutDownDocument = function ([form, mapForm]) {
   setFormState(form, settings.disabled);
 
   setFormState(mapForm, settings.disabled);
