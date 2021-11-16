@@ -1,14 +1,45 @@
-import { shutDownDocument, turningOnDocument } from './no-active-document.js';
-import { checkTitleValidity } from './form-utils/check-title-validity.js';
-import { priceInputCustum } from './form-utils/price-input.js';
-import { ensureAvailableCapacilty } from './form-utils/ensure-available-capacilty.js';
-import { setPrice } from './form-utils/set-Price.js';
-import { timeinTimeout } from './form-utils/timein-timout.js';
-import { createLoader, sendData } from './load.js';
-import { showAlert } from './show-alert.js';
-import { renderTagMarkers, changingType, changingPrice, changingRooms, changingGuests, changingFeatures} from './form-utils/render-tag-markers.js';
-import { throttle } from './utils/throttle.js';
-import { MAX_LENGTH,MIN_LENGTH } from './settings.js';
+import {
+  shutDownDocument,
+  turningOnDocument
+} from './no-active-document.js';
+import {
+  checkTitleValidity
+} from './form-utils/check-title-validity.js';
+import {
+  priceInputCustum
+} from './form-utils/price-input.js';
+import {
+  ensureAvailableCapacilty
+} from './form-utils/ensure-available-capacilty.js';
+import {
+  setPrice
+} from './form-utils/set-Price.js';
+import {
+  timeinTimeout
+} from './form-utils/timein-timout.js';
+import {
+  createLoader,
+  sendData
+} from './load.js';
+import {
+  showAlert
+} from './show-alert.js';
+import {
+  renderTagMarkers,
+  changingType,
+  changingPrice,
+  changingRooms,
+  changingGuests,
+  changingFeatures
+} from './form-utils/render-tag-markers.js';
+import {
+  throttle
+} from './utils/throttle.js';
+import {
+  MAX_LENGTH,
+  MIN_LENGTH,
+  MAX_PRICE
+} from './settings.js';
 
 const allForms = [...document.forms];
 shutDownDocument(allForms);
@@ -26,7 +57,7 @@ titleInput.addEventListener('input', () => {
 //price input
 
 const priceInput = document.querySelector('#price');
-const MAX_PRICE = 1000000;
+
 
 priceInput.addEventListener('input', () => {
   priceInputCustum(priceInput, MAX_PRICE);
@@ -71,8 +102,7 @@ const map = L.map('map-canvas').on('load', () => {
 }).setView([35.69, 139.77], 10);
 
 L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
@@ -83,16 +113,13 @@ const mainPinIcon = L.icon({
   iconAnchor: [26, 52],
 });
 
-const marker = L.marker(
-  {
-    lat: 35.8039,
-    lng: 139.6397,
-  },
-  {
-    draggable: true,
-    icon: mainPinIcon,
-  },
-);
+const marker = L.marker({
+  lat: 35.8039,
+  lng: 139.6397,
+}, {
+  draggable: true,
+  icon: mainPinIcon,
+}, );
 
 const data = createLoader(showAlert);
 const DELAY_FRAMES = 500;
