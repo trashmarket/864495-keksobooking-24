@@ -17,7 +17,7 @@ let markerGroup;
 const renderTagMarkers = (arrayData, map) => {
   markerGroup = L.layerGroup().addTo(map);
 
-  arrayData.slice(0, COUNT_CARDS).filter((tag) => {
+  const filtered  = arrayData.slice(0, COUNT_CARDS).filter((tag) => {
     if ((houseType === 'any' || tag.offer.type === houseType)
     && (houseRooms === 'any' || tag.offer.rooms === +houseRooms)
     && (houseGuest === 'any' || tag.offer.guests === +houseGuest)
@@ -63,7 +63,8 @@ const renderTagMarkers = (arrayData, map) => {
         return true;
       }
     }
-  }).forEach((tag) => {
+  });
+  filtered.forEach((tag) => {
     const iconTag = makePinIcon(PIN_CARD_URL);
     const tagMarker = L.marker(
       tag.location,
