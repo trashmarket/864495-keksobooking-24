@@ -7,7 +7,10 @@ import {
   PIN_CARD_URL
 } from '../settings.js';
 import {
-  HouseTypes, PriceRange
+  GuestsCount,
+  HouseTypes,
+  PriceRange,
+  RoomCount
 } from './set-Price.js';
 
 let houseType = 'any';
@@ -23,30 +26,52 @@ const housingFeaturesSelekt = document.querySelector('#housing-features');
 
 let markerGroup;
 
-
-const housingTypeRule = (offer, pred) => {
+const applyPred = (offer, pred) => {
   if (typeof pred === 'function') {
     return pred(offer);
   }
   return true;
 };
 
-const priceRangeRule = (offer, pred) =>{
-  if(typeof pred === 'function'){
-    return pred(offer);
+const applyFeatures = (offerFeatures, filterFeatures) => {
+  if (!Array.isArray(filterFeatures) || filterFeatures.length <= 0) {
+    return true;
   }
-  return true;
+  if (!Array.isArray(offerFeatures) || offerFeatures.length <= 0) {
+    return false;
+  }
+  return filterFeatures.every((filter) => offerFeatures.some((offer) => offer === filter));
 };
 
-const makeFiltering = (data, filter) => data.filter((offer) => (
-  housingTypeRule(offer, HouseTypes[filter.type])
-  && priceRangeRule(offer, PriceRange[filter.price])
-));
+const makeFiltering = (data, filter) => {
+  const typePred = HouseTypes[filter.type];
+  const pricePred = PriceRange[filter.price];
+  const roomsPred = RoomCount[filter.rooms];
+  const guestsPred = GuestsCount[filter.guests];
+
+  return data.filter((offer) => (
+    applyPred(offer, typePred) &&
+    applyPred(offer, pricePred) &&
+    applyPred(offer, roomsPred) &&
+    applyPred(offer, guestsPred) &&
+    applyFeatures(offer.features, filter.features)
+  ));
+};
+
+const prepareFilter = ()=>(
+  {
+    type: housingTypeSelector.value,
+    price: housingPrice.value,
+    rooms: houseRoomsSelekt.value,
+    guests: houseGuestsSelekt.value,
+    features: [...housingFeaturesSelekt.querySelectorAll('input[type=checkbox]')].filter((e)=>e.checked).map((e)=>e.value),
+  }
+);
 
 const renderTagMarkers = (arrayData, map) => {
   markerGroup = L.layerGroup().addTo(map);
 
-  const filtered = makeFiltering(arrayData, {}).filter((tag) => {
+  const filtered = makeFiltering(arrayData, prepareFilter()).filter((tag) => {
     if ((houseType === 'any' || tag.offer.type === houseType) &&
       (houseRooms === 'any' || tag.offer.rooms === +houseRooms) &&
       (houseGuest === 'any' || tag.offer.guests === +houseGuest)
