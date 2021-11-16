@@ -1,5 +1,4 @@
-import { shutDownDocument } from './no-active-document.js';
-import { turningOnDocument } from './active-document.js';
+import { shutDownDocument, turningOnDocument } from './no-active-document.js';
 import { checkTitleValidity } from './form-utils/check-title-validity.js';
 import { priceInputCustum } from './form-utils/price-input.js';
 import { ensureAvailableCapacilty } from './form-utils/ensure-available-capacilty.js';
@@ -14,8 +13,8 @@ const FORM_AD = document.querySelector('.ad-form');
 const FORM_AD_CHILDREN = FORM_AD.querySelectorAll('fieldset');
 const MAP_FILTER = document.querySelector('.map__filters');
 const MAP_CHILDREN = MAP_FILTER.querySelectorAll('*');
-
-shutDownDocument([...document.forms]);
+const allForms = [...document.forms];
+shutDownDocument(allForms);
 
 
 // title form input
@@ -71,7 +70,7 @@ timeout.addEventListener('input', () => {
 // Map
 const inputAddress = document.querySelector('#address');
 const map = L.map('map-canvas').on('load', () => {
-  turningOnDocument(FORM_AD, FORM_AD_CHILDREN, MAP_FILTER, MAP_CHILDREN);
+  turningOnDocument(allForms);
   inputAddress.value = 'lat: 35.8039, lng: 139.6397';
 }).setView([35.69, 139.77], 10);
 
