@@ -14,10 +14,12 @@ const housingFeaturesSelekt = document.querySelector('#housing-features');
 
 let markerGroup;
 
+const makeFiltering = (data)=> data;
+
 const renderTagMarkers = (arrayData, map) => {
   markerGroup = L.layerGroup().addTo(map);
 
-  const filtered  = arrayData.filter((tag) => {
+  const filtered  = makeFiltering(arrayData).filter((tag) => {
     if ((houseType === 'any' || tag.offer.type === houseType)
     && (houseRooms === 'any' || tag.offer.rooms === +houseRooms)
     && (houseGuest === 'any' || tag.offer.guests === +houseGuest)
