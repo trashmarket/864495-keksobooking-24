@@ -9,7 +9,7 @@ import {
   setMaxPriceValidator
 } from './form-utils/price-input.js';
 import {
-  ensureAvailableCapacilty, ensureCapacityAvailable
+  ensureCapacityAvailable, setSyncCountCapacity
 } from './form-utils/ensure-available-capacilty.js';
 import {
   setPrice
@@ -51,10 +51,7 @@ setTitleValidator(titleInput);
 setMaxPriceValidator(priceInput);
 
 //rooms selekt
-
-roomNumber.addEventListener('input', () => {
-  ensureCapacityAvailable(roomNumber, capacity);
-});
+setSyncCountCapacity(roomNumber, capacity);
 
 // type house
 

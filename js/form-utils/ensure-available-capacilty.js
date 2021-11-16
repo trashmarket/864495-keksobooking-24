@@ -12,3 +12,9 @@ const ensureEnabled = (capacityArray, capacityOptions)=>{
 export const ensureCapacityAvailable = (roomCountInput, capacityInput)=>{
   ensureEnabled(roomCountCapacitySettings[roomCountInput.value],[...capacityInput.options]);
 };
+
+export const setSyncCountCapacity = (roomCountInput, capacityInput)=>{
+  roomCountInput.addEventListener('input', () => {
+    ensureCapacityAvailable(roomCountInput, capacityInput);
+  });
+};
