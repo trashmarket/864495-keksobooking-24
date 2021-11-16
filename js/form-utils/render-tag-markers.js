@@ -1,5 +1,5 @@
 import { generationOneCard, makePinIcon } from '../generation-card.js';
-import { COUNT_CARDS, ICON_ANCHOR_HEIGHT, ICON_ANCHOR_WIDTH, ICON_HEIGHT, ICON_WIDTH, PIN_CARD_URL } from '../settings.js';
+import { COUNT_CARDS, PIN_CARD_URL } from '../settings.js';
 
 let houseType = 'any';
 let housePrice = 'any';

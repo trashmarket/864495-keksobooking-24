@@ -40,10 +40,6 @@ import {
 } from './utils/throttle.js';
 import {
   DELAY_FRAMES,
-  ICON_ANCHOR_HEIGHT,
-  ICON_ANCHOR_WIDTH,
-  ICON_HEIGHT,
-  ICON_WIDTH,
   INITIAL_LAT,
   INITIAL_LNG,
   INITIAL_MARKER_LAT,
