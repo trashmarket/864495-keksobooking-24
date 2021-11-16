@@ -1,11 +1,11 @@
 const shutDownDocument = function (form, formChildren, mapForm, mapFormChildren) {
   form.classList.add('ad-form--disabled');
-  formChildren.forEach((item) => {
+  [...form.elements].forEach((item) => {
     item.disabled = true;
   });
 
   mapForm.classList.add('ad-form--disabled');
-  mapFormChildren.forEach((item) => {
+  [...mapForm.elements].forEach((item) => {
     item.disabled = true;
   });
 };
