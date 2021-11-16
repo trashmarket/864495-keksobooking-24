@@ -7,7 +7,7 @@ import {
   PIN_CARD_URL
 } from '../settings.js';
 import {
-  HouseTypes
+  HouseTypes, PriceRange
 } from './set-Price.js';
 
 let houseType = 'any';
@@ -24,16 +24,23 @@ const housingFeaturesSelekt = document.querySelector('#housing-features');
 let markerGroup;
 
 
-const housingTypeRule = (offer, filterType) => {
-  const pred = HouseTypes[filterType];
+const housingTypeRule = (offer, pred) => {
   if (typeof pred === 'function') {
     return pred(offer);
   }
   return true;
 };
 
+const priceRangeRule = (offer, pred) =>{
+  if(typeof pred === 'function'){
+    return pred(offer);
+  }
+  return true;
+};
+
 const makeFiltering = (data, filter) => data.filter((offer) => (
-  housingTypeRule(offer, filter.type)
+  housingTypeRule(offer, HouseTypes[filter.type])
+  && priceRangeRule(offer, PriceRange[filter.price])
 ));
 
 const renderTagMarkers = (arrayData, map) => {

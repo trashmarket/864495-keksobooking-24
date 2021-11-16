@@ -1,3 +1,5 @@
+import { PRICE_RANGE_HIGHT, PRICE_RANGE_LOW } from '../settings.js';
+
 export const HouseTypes = {
   bungalow:{
     price: 0,
@@ -24,6 +26,12 @@ export const HouseTypes = {
     label: 'Дом',
     filter: (offer)=>offer.type === 'house',
   },
+};
+
+export const PriceRange = {
+  low:(offer)=>offer.price<PRICE_RANGE_LOW,
+  middle: (offer)=>offer.price<PRICE_RANGE_HIGHT && offer.price >=PRICE_RANGE_LOW,
+  high: (offer)=>offer.price>= PRICE_RANGE_HIGHT,
 };
 
 const setPrice = (type, priceInput) => {

@@ -14,3 +14,5 @@ export const DELAY_FRAMES = 500;
 export const PIN_URL = 'img/main-pin.svg';
 export const PIN_CARD_URL = 'img/pin.svg';
 export const COUNT_CARDS = 10;
+export const PRICE_RANGE_LOW = 10000;
+export const PRICE_RANGE_HIGHT = 50000;
