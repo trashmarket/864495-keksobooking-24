@@ -15,12 +15,14 @@ const setFormState = (form, state) => {
   });
 };
 
-const shutDownDocument = function ([form, mapForm]) {
-  setFormState(form, settings.disabled);
-
-  setFormState(mapForm, settings.disabled);
+const shutDownDocument = function (forms) {
+  forms.forEach((form)=>setFormState(form, settings.disabled));
+};
+const turningOnDocument = function(forms){
+  forms.forEach((form)=>setFormState(form, settings.enabled));
 };
 
 export {
-  shutDownDocument
+  shutDownDocument,
+  turningOnDocument
 };
