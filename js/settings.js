@@ -12,3 +12,5 @@ export const ICON_ANCHOR_WIDTH = 26;
 export const ICON_ANCHOR_HEIGHT = 52;
 export const DELAY_FRAMES = 500;
 export const PIN_URL = 'img/main-pin.svg';
+export const PIN_CARD_URL = 'img/pin.svg';
+export const COUNT_CARDS = 10;

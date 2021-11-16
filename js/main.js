@@ -51,6 +51,7 @@ import {
   INITIAL_ZOOM,
   PIN_URL
 } from './settings.js';
+import { makePinIcon } from './generation-card.js';
 
 const allForms = [...document.forms];
 shutDownDocument(allForms);
@@ -87,11 +88,7 @@ L.tileLayer(
   },
 ).addTo(map);
 
-const mainPinIcon = L.icon({
-  iconUrl: PIN_URL,
-  iconSize: [ICON_WIDTH, ICON_HEIGHT],
-  iconAnchor: [ICON_ANCHOR_WIDTH, ICON_ANCHOR_HEIGHT],
-});
+const mainPinIcon = makePinIcon(PIN_URL);
 
 const marker = L.marker({
   lat: INITIAL_MARKER_LAT,

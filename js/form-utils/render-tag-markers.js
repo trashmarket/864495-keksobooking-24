@@ -1,5 +1,6 @@
-import { generationOneCard } from '../generation-card.js';
-const COUNT_CARDS = 10;
+import { generationOneCard, makePinIcon } from '../generation-card.js';
+import { COUNT_CARDS, ICON_ANCHOR_HEIGHT, ICON_ANCHOR_WIDTH, ICON_HEIGHT, ICON_WIDTH, PIN_CARD_URL } from '../settings.js';
+
 let houseType = 'any';
 let housePrice = 'any';
 let houseRooms = 'any';
@@ -63,15 +64,11 @@ const renderTagMarkers = (arrayData, map) => {
       }
     }
   }).forEach((tag) => {
-    const iconTag = L.icon({
-      iconUrl: 'img/pin.svg',
-      iconSize: [52, 52],
-      iconAnchor: [26, 52],
-    });
+    const iconTag = makePinIcon(PIN_CARD_URL);
     const tagMarker = L.marker(
       tag.location,
       {
-        draggable: true,
+        draggable: false,
         icon: iconTag,
       },
     );
