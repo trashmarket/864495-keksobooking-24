@@ -9,10 +9,6 @@ import { showAlert } from './show-alert.js';
 import { renderTagMarkers, changingType, changingPrice, changingRooms, changingGuests, changingFeatures} from './form-utils/render-tag-markers.js';
 import { throttle } from './utils/throttle.js';
 
-const FORM_AD = document.querySelector('.ad-form');
-const FORM_AD_CHILDREN = FORM_AD.querySelectorAll('fieldset');
-const MAP_FILTER = document.querySelector('.map__filters');
-const MAP_CHILDREN = MAP_FILTER.querySelectorAll('*');
 const allForms = [...document.forms];
 shutDownDocument(allForms);
 
