@@ -61,6 +61,7 @@ export const setSyncMinPrice = (typeHouse, priceInput) => {
   typeHouse.addEventListener('input', () => {
     setPrice(typeHouse.value, priceInput);
   });
+  setPrice(typeHouse.value, priceInput);
 };
 
 export {
