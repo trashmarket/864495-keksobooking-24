@@ -119,7 +119,8 @@ const marker = L.marker({
 }, {
   draggable: true,
   icon: mainPinIcon,
-}, );
+},
+);
 
 const data = createLoader(showAlert);
 const DELAY_FRAMES = 500;
