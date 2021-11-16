@@ -1,5 +1,14 @@
-import { generationOneCard, makePinIcon } from '../generation-card.js';
-import { COUNT_CARDS, PIN_CARD_URL } from '../settings.js';
+import {
+  generationOneCard,
+  makePinIcon
+} from '../generation-card.js';
+import {
+  COUNT_CARDS,
+  PIN_CARD_URL
+} from '../settings.js';
+import {
+  HouseTypes
+} from './set-Price.js';
 
 let houseType = 'any';
 let housePrice = 'any';
@@ -14,15 +23,26 @@ const housingFeaturesSelekt = document.querySelector('#housing-features');
 
 let markerGroup;
 
-const makeFiltering = (data)=> data;
+
+const housingTypeRule = (offer, filterType) => {
+  const pred = HouseTypes[filterType];
+  if (typeof pred === 'function') {
+    return pred(offer);
+  }
+  return true;
+};
+
+const makeFiltering = (data, filter) => data.filter((offer) => (
+  housingTypeRule(offer, filter.type)
+));
 
 const renderTagMarkers = (arrayData, map) => {
   markerGroup = L.layerGroup().addTo(map);
 
-  const filtered  = makeFiltering(arrayData).filter((tag) => {
-    if ((houseType === 'any' || tag.offer.type === houseType)
-    && (houseRooms === 'any' || tag.offer.rooms === +houseRooms)
-    && (houseGuest === 'any' || tag.offer.guests === +houseGuest)
+  const filtered = makeFiltering(arrayData, {}).filter((tag) => {
+    if ((houseType === 'any' || tag.offer.type === houseType) &&
+      (houseRooms === 'any' || tag.offer.rooms === +houseRooms) &&
+      (houseGuest === 'any' || tag.offer.guests === +houseGuest)
     ) {
       return true;
     }
@@ -52,8 +72,8 @@ const renderTagMarkers = (arrayData, map) => {
 
     if (tag.offer.features) {
       const array = tag.offer.features.map((item) => {
-        for (let i=0; i < houseFetaures.length; i++) {
-          if (item === houseFetaures[i]){
+        for (let i = 0; i < houseFetaures.length; i++) {
+          if (item === houseFetaures[i]) {
             return item;
           }
         }
@@ -61,7 +81,7 @@ const renderTagMarkers = (arrayData, map) => {
 
       houseFetaures.sort();
       array.sort();
-      if (houseFetaures.join('') === array.join('')){
+      if (houseFetaures.join('') === array.join('')) {
         return true;
       }
     }
@@ -69,8 +89,7 @@ const renderTagMarkers = (arrayData, map) => {
   filtered.slice(0, COUNT_CARDS).forEach((tag) => {
     const iconTag = makePinIcon(PIN_CARD_URL);
     const tagMarker = L.marker(
-      tag.location,
-      {
+      tag.location, {
         draggable: false,
         icon: iconTag,
       },
@@ -115,7 +134,7 @@ const changingGuests = (cb) => {
 
 const changingFeatures = (cb) => {
   housingFeaturesSelekt.addEventListener('click', (event) => {
-    if (event.target.closest('.map__checkbox')){
+    if (event.target.closest('.map__checkbox')) {
       markerGroup.clearLayers();
       const featuresValue = event.target.value;
       const featuresIndex = houseFetaures.indexOf(featuresValue);
@@ -129,4 +148,11 @@ const changingFeatures = (cb) => {
   });
 };
 
-export {renderTagMarkers, changingType, changingPrice, changingRooms, changingGuests, changingFeatures};
+export {
+  renderTagMarkers,
+  changingType,
+  changingPrice,
+  changingRooms,
+  changingGuests,
+  changingFeatures
+};

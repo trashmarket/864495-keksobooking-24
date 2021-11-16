@@ -2,22 +2,27 @@ export const HouseTypes = {
   bungalow:{
     price: 0,
     label: 'Бунгало',
+    filter: (offer)=>offer.type === 'bungalow',
   },
   flat: {
     price: 1000,
     label: 'Квартира',
+    filter: (offer)=>offer.type === 'flat',
   },
   hotel:{
     price: 3000,
     label: 'Отель',
+    filter: (offer)=>offer.type === 'hotel',
   },
   palace:{
     price:10000,
     label: 'Дворец',
+    filter: (offer)=>offer.type === 'palace',
   },
   house: {
     price: 5000,
     label: 'Дом',
+    filter: (offer)=>offer.type === 'house',
   },
 };
 
