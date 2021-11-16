@@ -6,7 +6,7 @@ import {
   setTitleValidator
 } from './form-utils/check-title-validity.js';
 import {
-  priceInputCustum
+  setMaxPriceValidator
 } from './form-utils/price-input.js';
 import {
   ensureAvailableCapacilty
@@ -35,9 +35,6 @@ import {
 import {
   throttle
 } from './utils/throttle.js';
-import {
-  MAX_PRICE
-} from './settings.js';
 
 const allForms = [...document.forms];
 shutDownDocument(allForms);
@@ -48,12 +45,7 @@ setTitleValidator(document.querySelector('#title'));
 
 //price input
 
-const priceInput = document.querySelector('#price');
-
-
-priceInput.addEventListener('input', () => {
-  priceInputCustum(priceInput, MAX_PRICE);
-});
+setMaxPriceValidator(document.querySelector('#price'));
 
 //rooms selekt
 
