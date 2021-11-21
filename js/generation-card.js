@@ -1,4 +1,5 @@
 import { setTypeTextContent } from './form-utils/set-Price.js';
+import { ICON_ANCHOR_HEIGHT, ICON_ANCHOR_WIDTH, ICON_HEIGHT, ICON_WIDTH } from './setting.js';
 const card = document.querySelector('#card').content;
 const cardElement = card.querySelector('.popup');
 
@@ -20,6 +21,14 @@ const generationOneCard = (house) => {
 const generationCard = function (cards) {
   return cards.map(generationOneCard);
 };
+
+
+export const makePinIcon = (url)=>  L.icon({
+  iconUrl: url,
+  iconSize: [ICON_WIDTH, ICON_HEIGHT],
+  iconAnchor: [ICON_ANCHOR_WIDTH, ICON_ANCHOR_HEIGHT],
+});
+
 
 //console.log(arr);
 export {generationCard, generationOneCard};

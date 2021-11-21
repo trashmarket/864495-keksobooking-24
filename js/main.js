@@ -7,8 +7,9 @@ import { setPrice } from './form-utils/set-Price.js';
 import { timeinTimeout } from './form-utils/timein-timout.js';
 import { createLoader, sendData } from './load.js';
 import { showAlert } from './show-alert.js';
-import { renderTagMarkers, changingType, changingPrice, changingRooms, changingGuests, changingFeatures} from './form-utils/render-tag-markers.js';
-import { throttle, debounce} from './utils/throttle.js';
+import { renderTagMarkers } from './form-utils/render-tag-markers.js';
+import { debounce } from './utils/throttle.js';
+import {DELAY_FRAMES} from './setting.js';
 
 const FORM_AD = document.querySelector('.ad-form');
 const FORM_AD_CHILDREN = FORM_AD.querySelectorAll('fieldset');
@@ -50,15 +51,13 @@ roomNumber.addEventListener('input', () => {
 // type house
 
 const typeHouse = document.querySelector('#type');
+const timein = document.querySelector('#timein');
+const timeout = document.querySelector('#timeout');
 
 typeHouse.addEventListener('input', () => {
   setPrice(typeHouse.value, priceInput);
 });
 
-// timein timeout
-
-const timein = document.querySelector('#timein');
-const timeout = document.querySelector('#timeout');
 
 timein.addEventListener('input', () => {
   timeinTimeout(timein, timeout);
@@ -100,14 +99,22 @@ const marker = L.marker(
 );
 
 const data = createLoader(showAlert);
-const DELAY_FRAMES = 500;
-data.then((array) => {
+
+let array = [];
+
+const renderTagMarkersThrottled = debounce(renderTagMarkers, DELAY_FRAMES);
+const filterForm = document.querySelector('.map__filters');
+
+filterForm.addEventListener('input',()=>{
+  renderTagMarkersThrottled(array, map);
+});
+filterForm.querySelector('#housing-features').addEventListener('click',()=>{
+  renderTagMarkersThrottled(array,map);
+});
+
+data.then((received) => {
+  array = received;
   renderTagMarkers(array, map);
-  changingType(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
-  changingPrice(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
-  changingRooms(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
-  changingGuests(throttle(() => renderTagMarkers(array, map), DELAY_FRAMES));
-  changingFeatures(debounce(() => renderTagMarkers(array, map), DELAY_FRAMES));
 });
 
 marker.addTo(map);
